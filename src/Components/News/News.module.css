@@ -1,0 +1,128 @@
+.h2 {
+  color: rgb(50, 50, 50);
+  padding: 0 0 0 1rem;
+}
+.formCnt {
+  padding: 1rem;
+}
+.Form {
+  min-height: 80vh;
+  background: linear-gradient(#f5f5f5, #ffffff);
+  padding: 1rem;
+}
+
+.categoryLable {
+  font-size: 18px;
+  font-weight: 400;
+  /* color: rgb(132, 132, 132); */
+  margin-bottom: 0.5rem;
+}
+.Categories {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.searchInput {
+  padding: 0.3em 0.8em;
+  font-size: 1em;
+  border-width: 0.1em;
+  border-style: solid;
+  border-radius: calc(6 * 1px);
+  outline: transparent;
+  width: 66%;
+  transition: cubic-bezier(0.19, 1, 0.22, 1) 0.2s;
+}
+.searchInput:focus,
+.input:focus {
+  border-color: skyblue;
+  scale: 1.02;
+}
+.searchInput:hover {
+  border-color: skyblue;
+  scale: 1.02;
+}
+.searchBox {
+  position: absolute;
+  left: 7em;
+  top: 2.3em;
+  background-color: rgb(114, 114, 114);
+  overflow: hidden;
+  border-bottom: transparent;
+  border-radius: 0.5em;
+}
+.searchItem {
+  padding: 0.3em 0.8em;
+  font-size: 1em;
+  width: 15.8em;
+  transition: cubic-bezier(0.19, 1, 0.22, 1) 0.2s;
+  background-color: white;
+  border-bottom: 1px solid rgb(114, 114, 114);
+}
+.searchItem:hover {
+  background-color: rgb(114, 114, 114);
+  color: white;
+  cursor: pointer;
+}
+.selectedBox {
+  display: flex;
+  flex-wrap: wrap;
+  /* background-color: skyblue; */
+  margin-left: 2rem;
+}
+.selectedItem {
+  padding: 0.3em 0.5em;
+  margin: 0.1em 0.2em;
+  background-color: bisque;
+  border-radius: 0.5em;
+  /* transition: cubic-bezier(0.19, 1, 0.22, 1) 0.2s; */
+  animation: animate1 0.5s;
+}
+@keyframes animate1 {
+  0% {
+    /* transform: scale(0); */
+    transform: translate(-100px);
+    opacity: 0;
+  }
+  100% {
+    /* transform: scale(1); */
+    transform: translate(0);
+    opacity: 1;
+  }
+}
+.removeBtn {
+  padding: 0em 0em;
+  margin-right: 0.2em;
+  background-color: transparent;
+  border-radius: 0.5em;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+.inputGroup {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  width: 75%;
+}
+.label {
+  min-width: 7em;
+}
+.input {
+  width: 100%;
+  padding: 0.3em 0.8em;
+  font-size: 1em;
+  border-width: 0.1em;
+  border-style: solid;
+  border-radius: calc(6 * 1px);
+  outline: transparent;
+  transition: cubic-bezier(0.19, 1, 0.22, 1) 0.2s;
+}
+.btnGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  width: 50%;
+}
