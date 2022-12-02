@@ -22,15 +22,15 @@ const SingleFolder = () => {
   const [progress, setprogress] = useState(0);
   const [EditForm, setEditForm] = useState(false);
   const [ChannelList, setChannelList] = useState([]);
+  const [isUpdate, setIsUpdate] = useState(false);
   const [FormDatas, setFormDatas] = useState({
     title: "",
-    description: "",
     _id: "",
     channelInput: "",
     category: "",
     channels: [],
   });
-  const { title, description, _id, channels, channelInput, category } =
+  const { title, _id, channels, channelInput, category } =
     FormDatas;
   const [Files, setFiles] = useState([]);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -69,8 +69,7 @@ const SingleFolder = () => {
       },
     };
     const res = await Axios.get(`/open/folder/${id}`, config);
-    setFiles(res.data.news);
-    console.log(res.data);
+    setFiles(res.data.shorts);
   };
   const showChannelList = async () => {
     const config = {
@@ -92,7 +91,6 @@ const SingleFolder = () => {
       blobUrl &&
       fileType &&
       title &&
-      description &&
       channels.length > 0 &&
       true
     ) {
@@ -125,14 +123,13 @@ const SingleFolder = () => {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("title", title);
-      formData.append("description", description);
       formData.append("category", category);
       formData.append("folderId", id);
       formData.append("fileType", fileType);
       channels.map((channel) => formData.append("channels[]", channel._id));
 
       const res = await Axios.post(
-        "/news",
+        "/shorts",
         formData,
         {
           headers: {
@@ -152,7 +149,6 @@ const SingleFolder = () => {
       console.log(res.data);
       setFormDatas({
         title: "",
-        description: "",
         _id: "",
         channelInput: "",
         category: "",
@@ -179,7 +175,6 @@ const SingleFolder = () => {
     blobUrl,
     fileType,
     title,
-    description,
     id,
     Files,
     channels,
@@ -190,7 +185,6 @@ const SingleFolder = () => {
       blobUrl &&
       fileType &&
       title &&
-      description &&
       channels.length > 0 &&
       true
     ) {
@@ -222,14 +216,13 @@ const SingleFolder = () => {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("title", title);
-      formData.append("description", description);
       formData.append("folderId", id);
       formData.append("fileType", fileType);
       formData.append("newsId", _id);
       channels.map((channel) => formData.append("channels[]", channel._id));
 
       const res = await Axios.put(
-        "/news",
+        "/shorts",
         formData,
         {
           headers: {
@@ -242,10 +235,8 @@ const SingleFolder = () => {
         },
         []
       );
-      // setFiles([...Files, { fileType: fileType, title: title, description: description, file: croppedImage }]);
       setFormDatas({
         title: "",
-        description: "",
         _id: "",
         channelInput: "",
         channels: [],
@@ -271,7 +262,6 @@ const SingleFolder = () => {
     blobUrl,
     fileType,
     title,
-    description,
     id,
     Files,
     channels,
@@ -279,6 +269,7 @@ const SingleFolder = () => {
   ]);
   const handleDropzone = () => {
     setshowDropzone(true);
+    setIsUpdate(false);
   };
   const BackButton = async () => {
     const config = {
@@ -340,19 +331,19 @@ const SingleFolder = () => {
         token: JSON.parse(localStorage.getItem("accessToken")),
       },
     };
-    const res = await Axios.get(`/news/${fileId}`, config);
+    const res = await Axios.get(`/shorts/${fileId}`, config);
     console.log(res.data);
     setblobUrl(res.data.file);
     setfileType(res.data.fileType);
     setFormDatas({
       title: res.data.title,
-      description: res.data.description,
       _id: res.data._id,
       channels: res.data.channels,
       channelInput: "",
     });
     setshowDropzone(true);
     setEditForm(true);
+    setIsUpdate(true);
   };
   const handlePlayerReady = (player) => {
     playerRef.current = player;
@@ -377,7 +368,6 @@ const SingleFolder = () => {
       style={{ width: "100%" }}
     >
       {alert.show && <Alert message={alert.message} />}
-
       {!showDropzone && (
         <div className="container">
           <div className="showDropzone-container mt-2 mx-2">
@@ -412,9 +402,10 @@ const SingleFolder = () => {
                               controls: true,
                               responsive: true,
                               fluid: true,
+                              // file in base64
                               sources: [
                                 {
-                                  src: file.file,
+                                  src: `data:video/mp4;base64,${file.file}`,
                                   type: "video/mp4",
                                 },
                               ],
@@ -423,6 +414,7 @@ const SingleFolder = () => {
                           />
                         </div>
                       )}
+
                       {file.fileType === "image" && (
                         <img src={file.file} className="card-img-top" />
                       )}
@@ -450,23 +442,6 @@ const SingleFolder = () => {
                         ) : (
                           <h5 className="card-title">{file.title}</h5>
                         )}
-                        <p className="card-text">
-                          {showDesc.indexOf(file._id) !== -1
-                            ? file.description + " "
-                            : file.description.length < 34
-                            ? file.description
-                            : file.description.slice(0, 35) + "..."}
-                          {file.description.length > 34 && (
-                            <button
-                              className="show-more"
-                              onClick={() => showAndHideBtn(file._id)}
-                            >
-                              {showDesc.indexOf(file._id) !== -1
-                                ? "Hide"
-                                : "Show More"}
-                            </button>
-                          )}
-                        </p>
                         <button
                           onClick={() => confirmBox(file._id, index)}
                           className="btn btn-danger mx-1"
@@ -514,7 +489,6 @@ const SingleFolder = () => {
           getInputProps={getInputProps}
           handleInput={handleInput}
           title={title}
-          description={description}
           channels={channels}
           channelInput={channelInput}
           category={category}
@@ -536,6 +510,7 @@ const SingleFolder = () => {
           onCropComplete={onCropComplete}
           acceptedFiles={acceptedFiles}
           CategoryList={CategoryList}
+          isUpdate={isUpdate}
         />
       )}
     </motion.div>

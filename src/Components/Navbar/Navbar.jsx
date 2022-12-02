@@ -162,6 +162,11 @@ const Navbar = () => {
                   <div className="sb-nav-link-icon"></div>
                   Manage News
                 </Link>
+                <Link className="nav-link" to="/news-categories">
+                  <i className="bi bi-bounding-box"></i>
+                  <div className="sb-nav-link-icon"></div>
+                  News Categories
+                </Link>
                 <Link className="nav-link" to="/folderManagement">
                   <i className="bi bi-menu-button-wide"></i>
                   <div className="sb-nav-link-icon"></div>

@@ -13,6 +13,7 @@ import { AnimatePresence } from "framer-motion";
 import Register from "../List/Register";
 import Requests from "../Requests/Requests";
 import Categories from "../Categories/Categories";
+import NewsCat from "../NewsCategories/NewsCat";
 import News from "../News/News";
 import SingleNews from "../News/SingleNews";
 import AddNews from "../News/AddNews";
@@ -27,6 +28,7 @@ const AnimatedRoutes = () => {
         <Route path="/folderManagement" element={<FolderManage />} />
         <Route path="/folder/:id" element={<VideoData />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/news-categories" element={<NewsCat />} />
         <Route path="/profile/:id" element={<UserProfile />} />
         <Route path="/requests" element={<Requests />} />
         <Route path="/categories" element={<Categories />} />

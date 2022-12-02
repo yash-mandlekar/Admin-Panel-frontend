@@ -44,7 +44,6 @@ const Home = () => {
     };
     const { data } = await Axios.get("/all/news", config);
     setNews(data);
-    console.log(data);
   };
   const handlePlayerReady = (player) => {
     playerRef.current = player;
@@ -62,8 +61,7 @@ const Home = () => {
         token: JSON.parse(localStorage.getItem("accessToken")),
       },
     };
-    await Axios.delete(`/news/`, {
-      data: { newsId: file._id, folderId: file.folderId },
+    await Axios.delete(`/news/${file._id}`, {
       headers: config.headers,
     });
     getNews();
@@ -125,7 +123,10 @@ const Home = () => {
                     </div>
                   )}
                   {file.fileType === "image" && (
-                    <img src={file.file} className="card-img-top" />
+                    <img
+                      src={`data:image/jpeg;base64,${file.file}`}
+                      className="card-img-top"
+                    />
                   )}
                   {file.fileType === "audio" && (
                     <audio src={file.file} controls className="card-img-top" />
@@ -140,12 +141,12 @@ const Home = () => {
                     >
                       by: {file.author.username}
                     </span>
-                    {file.title.length > 20 ? (
+                    {file.metaTitle.length > 20 ? (
                       <h5 className="card-title">
-                        {file.title.slice(0, 20)}...
+                        {file.metaTitle.slice(0, 20)}...
                       </h5>
                     ) : (
-                      <h5 className="card-title">{file.title}</h5>
+                      <h5 className="card-title">{file.metaTitle}</h5>
                     )}
                     <p className="card-text">
                       {showDesc.indexOf(file._id) !== -1

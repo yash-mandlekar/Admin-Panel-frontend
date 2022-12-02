@@ -187,17 +187,22 @@ const EditCategory = ({
                   {/* Menu */}
                   <div className="col-md-12 pr-1 mb-3 mt-3">
                     <div className="input-group">
-                      <span className="input-group-text" id="basic-addon1">
+                      <label
+                        className="input-group-text"
+                        htmlFor="inputGroupSelect01"
+                      >
                         Menu
-                      </span>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Menu"
-                        name="showInMenu"
-                        value={showInMenu}
+                      </label>
+                      <select
                         onChange={handleChange}
-                      />
+                        value={showInMenu}
+                        name="showInMenu"
+                        className="form-select"
+                        id="inputGroupSelect02"
+                      >
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                      </select>
                     </div>
                   </div>
                   {/* Meta Title */}

@@ -134,7 +134,7 @@ const News = () => {
                     </div>
                   )}
                   {file.fileType === "image" && (
-                    <img src={file.file} className="card-img-top" />
+                    <img src={`data:image/jpeg;base64,${file.file}`} className="card-img-top" />
                   )}
                   {file.fileType === "audio" && (
                     <audio src={file.file} controls className="card-img-top" />

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Alert from "../Alert/Alert";
 import Axios from "../Axios/Axios";
 import Style from "./News.module.css";
 const AddNews = () => {
@@ -21,6 +22,11 @@ const AddNews = () => {
     metaDescription: "",
     hashTags: [],
     shortDescription: "",
+    description: "",
+  });
+  const [alert, setalert] = useState({
+    show: false,
+    message: "",
   });
   const {
     categoryInp,
@@ -37,6 +43,7 @@ const AddNews = () => {
     metaDescription,
     hashTags,
     shortDescription,
+    description,
   } = NewsForm;
   useEffect(() => {
     getCategories();
@@ -47,18 +54,56 @@ const AddNews = () => {
         token: JSON.parse(localStorage.getItem("accessToken")),
       },
     };
-    const { data } = await Axios.get("/category", config);
+    const { data } = await Axios.get("/news-category", config);
     setCategories(data);
   };
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    // const config = {
-    //   headers: {
-    //     token: JSON.parse(localStorage.getItem("accessToken")),
-    //   },
-    // };
-    // const { data } = await Axios.post("/news", config);
-    // console.log(data);
+    e.preventDefault();
+    const config = {
+      headers: {
+        token: JSON.parse(localStorage.getItem("accessToken")),
+      },
+    };
+    const formData = new FormData();
+    formData.append("category", category);
+    formData.append("showInSlider", showInSlider);
+    formData.append("sliderPriority", sliderPriority);
+    formData.append("publishDateTime", publishDateTime);
+    formData.append("latestNews", latestNews);
+    formData.append("latestNewsPriority", latestNewsPriority);
+    formData.append("file", e.target.file.files[0]);
+    formData.append("aboutImage", aboutImage);
+    formData.append("imageSource", imageSource);
+    formData.append("metaTitle", metaTitle);
+    formData.append("metaDescription", metaDescription);
+    formData.append("hashTags", hashTags);
+    formData.append("shortDescription", shortDescription);
+    formData.append("description", description);
+    try {
+      await Axios.post("/news", formData, config);
+      setalert({
+        show: true,
+        message: "News Added Successfully",
+      });
+      setTimeout(() => {
+        setalert({
+          show: false,
+          message: "",
+        });
+      }, 3000);
+      navigation("/news");
+    } catch (err) {
+      setalert({
+        show: true,
+        message: err.response.data.message,
+      });
+      setTimeout(() => {
+        setalert({
+          show: false,
+          message: "",
+        });
+      }, 3000);
+    }
   };
   const handleSearch = (e) => {
     const cpy = [...NewsForm.category];
@@ -72,11 +117,11 @@ const AddNews = () => {
   };
   const handleChange = (e) => {
     setNewsForm({ ...NewsForm, [e.target.name]: e.target.value });
-    console.log(e.target.value);
   };
   return (
     <>
       <h2 className={Style.h2}>Add News :- </h2>
+      {alert.show && <Alert message={alert.message} />}
       <div className="showAllFile-container">
         <div className={Style.formCnt}>
           <form onSubmit={handleSubmit} className={Style.Form}>
@@ -311,6 +356,20 @@ const AddNews = () => {
                 placeholder="Short Description"
                 id="shortDescription"
                 value={shortDescription}
+                onChange={handleChange}
+                className={Style.input}
+              ></textarea>
+            </div>
+            {/* Description */}
+            <div className={Style.inputGroup}>
+              <label className={Style.label} htmlFor="Description">
+                Description:
+              </label>
+              <textarea
+                name="description"
+                placeholder=" description"
+                id="Description"
+                value={description}
                 onChange={handleChange}
                 className={Style.input}
               ></textarea>

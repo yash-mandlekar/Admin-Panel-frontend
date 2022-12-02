@@ -10,7 +10,6 @@ const DropZone = ({
   handleInput,
   title,
   category,
-  description,
   channels,
   channelInput,
   setshowDropdown,
@@ -31,6 +30,7 @@ const DropZone = ({
   zoom,
   setZoom,
   CategoryList,
+  isUpdate,
 }) => {
   return (
     <div className="container d-flex mt-2 file-folder-cnt">
@@ -74,16 +74,6 @@ const DropZone = ({
             aria-label="Username"
             aria-describedby="basic-addon1"
           />
-        </div>
-        <div className={`input-group ${blobUrl ? "w-100" : "w-50"}`}>
-          <textarea
-            className="form-control"
-            onChange={handleInput}
-            name="description"
-            value={description}
-            placeholder="Description..."
-            aria-label="With textarea"
-          ></textarea>
         </div>
         {/* choose channel dropdown with filter */}
         <div className={`input-group mt-3 ${blobUrl ? "w-100" : "w-50"}`}>
@@ -179,10 +169,15 @@ const DropZone = ({
                   responsive: true,
                   fluid: true,
                   sources: [
-                    {
-                      src: blobUrl,
-                      type: "video/mp4",
-                    },
+                    isUpdate
+                      ? {
+                          src: `data:video/mp4;base64,${blobUrl}`,
+                          type: "video/mp4",
+                        }
+                      : {
+                          src: blobUrl,
+                          type: "video/mp4",
+                        },
                   ],
                 }}
                 onReady={handlePlayerReady}
