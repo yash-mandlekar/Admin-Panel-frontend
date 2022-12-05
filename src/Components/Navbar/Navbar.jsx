@@ -162,6 +162,21 @@ const Navbar = () => {
                   <div className="sb-nav-link-icon"></div>
                   Manage News
                 </Link>
+                <Link className="nav-link" to="/e-paper">
+                  <i className="bi bi-pencil-square"></i>
+                  <div className="sb-nav-link-icon"></div>
+                  Manage E-Paper
+                </Link>
+                <Link className="nav-link" to="/cordinates">
+                  <i className="bi bi-pencil-square"></i>
+                  <div className="sb-nav-link-icon"></div>
+                  Manage E-Paper Cordinates
+                </Link>
+                <Link className="nav-link" to="/categories">
+                  <i className="bi bi-bounding-box"></i>
+                  <div className="sb-nav-link-icon"></div>
+                  Categories
+                </Link>
                 <Link className="nav-link" to="/news-categories">
                   <i className="bi bi-bounding-box"></i>
                   <div className="sb-nav-link-icon"></div>
@@ -179,12 +194,12 @@ const Navbar = () => {
                     Requests
                   </Link>
                 )}
-                <Link className="nav-link" to="/categories">
-                  <i className="bi bi-bounding-box"></i>
-                  <div className="sb-nav-link-icon"></div>
-                  Categories
+                <Link className="nav-link" to="/users">
+                  <i className="bi bi-people-fill"></i> &nbsp;
+                  {/* <div className="sb-nav-link-icon"></div> */}
+                  Users
                 </Link>
-                {/* Expense */}
+                {/* List */}
                 <Link
                   className="nav-link collapsed"
                   to="#"

@@ -104,7 +104,7 @@ const News = () => {
       <div className="d-flex flex-wrap showAllFile-container">
         {NewsList.map(
           (file, index) =>
-            file.approved == false && (
+            file.approved == "false" && (
               <div key={file._id} className="">
                 <div
                   className="card mt-1 mx-1"
@@ -134,7 +134,10 @@ const News = () => {
                     </div>
                   )}
                   {file.fileType === "image" && (
-                    <img src={`data:image/jpeg;base64,${file.file}`} className="card-img-top" />
+                    <img
+                      src={`data:image/jpeg;base64,${file.file}`}
+                      className="card-img-top"
+                    />
                   )}
                   {file.fileType === "audio" && (
                     <audio src={file.file} controls className="card-img-top" />
@@ -149,20 +152,20 @@ const News = () => {
                     >
                       by: {file.author.username}
                     </span>
-                    {file.title.length > 20 ? (
+                    {file.metaTitle.length > 20 ? (
                       <h5 className="card-title">
-                        {file.title.slice(0, 20)}...
+                        {file.metaTitle.slice(0, 20)}...
                       </h5>
                     ) : (
-                      <h5 className="card-title">{file.title}</h5>
+                      <h5 className="card-title">{file.metaTitle}</h5>
                     )}
                     <p className="card-text">
                       {showDesc.indexOf(file._id) !== -1
-                        ? file.description + " "
-                        : file.description.length < 34
-                        ? file.description
-                        : file.description.slice(0, 34) + "..."}
-                      {file.description.length > 34 && (
+                        ? file.metaDescription + " "
+                        : file.metaDescription.length < 34
+                        ? file.metaDescription
+                        : file.metaDescription.slice(0, 34) + "..."}
+                      {file.metaDescription.length > 34 && (
                         <button
                           className="show-more"
                           onClick={() => showAndHideBtn(file._id)}
@@ -173,8 +176,11 @@ const News = () => {
                         </button>
                       )}
                     </p>
-                    <button onClick={() => {}} className="btn btn-dark mx-1">
-                      Show more
+                    <button
+                      onClick={() => navigate(`/news/edit/${file._id}`)}
+                      className="btn btn-dark mx-1"
+                    >
+                      Edit
                     </button>
                     {/* delete button */}
                     <button

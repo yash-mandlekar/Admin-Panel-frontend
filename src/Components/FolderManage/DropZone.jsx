@@ -1,5 +1,7 @@
 import React from "react";
 import ReactPlayer from "./ReactPlayer";
+import Cropper from "react-easy-crop";
+
 const DropZone = ({
   setshowDropzone,
   blobUrl,
@@ -22,7 +24,6 @@ const DropZone = ({
   updateForm,
   handleDropzoneSubmit,
   handlePlayerReady,
-  Cropper,
   crop,
   setCrop,
   onCropComplete,

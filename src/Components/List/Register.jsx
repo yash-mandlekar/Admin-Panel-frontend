@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Axios from "../Axios/Axios";
 import { motion } from "framer-motion";
 import Alert from "../Alert/Alert";
+import moment from "moment";
 const Profile = () => {
   const [parents, setparents] = useState([]);
   const [alert, setalert] = useState({
@@ -493,33 +494,6 @@ const Profile = () => {
                     </div>
                   )}
                   <hr />
-                  {/* Country */}
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">Country</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                      <input
-                        onChange={handleInput}
-                        name="country"
-                        placeholder="Enter your country"
-                        type="text"
-                        className="form-control col-sm-9"
-                        value={country || ""}
-                      />
-                    </div>
-                  </div>
-                  {validation.country.error && (
-                    <div className="row">
-                      <div className="col-sm-3"></div>
-                      <div className="col-sm-9 text-secondary">
-                        <p className="text-danger">
-                          {validation.country.message}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                  <hr />
                   {/* Gender radio */}
                   <div className="row">
                     <div className="col-sm-3">
@@ -544,6 +518,33 @@ const Profile = () => {
                       <div className="col-sm-9 text-secondary">
                         <p className="text-danger">
                           {validation.gender.message}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  <hr />
+                  {/* Country */}
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Country</h6>
+                    </div>
+                    <div className="col-sm-9 text-secondary">
+                      <input
+                        onChange={handleInput}
+                        name="country"
+                        placeholder="Enter your country"
+                        type="text"
+                        className="form-control col-sm-9"
+                        value={country || ""}
+                      />
+                    </div>
+                  </div>
+                  {validation.country.error && (
+                    <div className="row">
+                      <div className="col-sm-3"></div>
+                      <div className="col-sm-9 text-secondary">
+                        <p className="text-danger">
+                          {validation.country.message}
                         </p>
                       </div>
                     </div>
@@ -641,6 +642,7 @@ const Profile = () => {
                         type="date"
                         className="form-control col-sm-9"
                         value={dateOfBirth || ""}
+                        max={moment().format("YYYY-MM-DD")}
                       />
                     </div>
                   </div>

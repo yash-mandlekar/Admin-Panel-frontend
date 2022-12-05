@@ -44,6 +44,7 @@ const Categories = () => {
     };
     const res = await Axios.get("/news-category", config);
     setcategories(res.data);
+    console.log(res.data);
   };
   const handleAdd = (e) => {
     setShowForm(true);
@@ -116,7 +117,10 @@ const Categories = () => {
       formdata.append("categoryUrl", EditForm.categoryUrl);
       formdata.append("sortOrder", EditForm.sortOrder);
       formdata.append("showInChild", EditForm.showInChild);
-      formdata.append("showInMenu", EditForm.showInMenu);
+      formdata.append(
+        "showInMenu",
+        EditForm.showInMenu.length > 0 ? "Yes" : "No"
+      );
       formdata.append("metaTitle", EditForm.metaTitle);
       formdata.append("metaDescription", EditForm.metaDescription);
       formdata.append("icon", e.target.icon.files[0]);

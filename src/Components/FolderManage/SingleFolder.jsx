@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import Axios from "../Axios/Axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
-import Cropper from "react-easy-crop";
 import getCroppedImg from "./CropImage";
 import { motion } from "framer-motion";
 import ReactPlayer from "./ReactPlayer";
@@ -30,8 +29,7 @@ const SingleFolder = () => {
     category: "",
     channels: [],
   });
-  const { title, _id, channels, channelInput, category } =
-    FormDatas;
+  const { title, _id, channels, channelInput, category } = FormDatas;
   const [Files, setFiles] = useState([]);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -87,13 +85,7 @@ const SingleFolder = () => {
     },
   });
   const handleDropzoneSubmit = useCallback(async () => {
-    if (
-      blobUrl &&
-      fileType &&
-      title &&
-      channels.length > 0 &&
-      true
-    ) {
+    if (blobUrl && fileType && title && channels.length > 0 && true) {
       if (fileType === "image") {
         var croppedImage = await getCroppedImg(blobUrl, croppedAreaPixels);
         var file = await fetch(croppedImage)
@@ -119,7 +111,6 @@ const SingleFolder = () => {
       }
       // file to formdata
       setshowDropzone(false);
-
       const formData = new FormData();
       formData.append("file", file);
       formData.append("title", title);
@@ -181,13 +172,7 @@ const SingleFolder = () => {
     channelInput,
   ]);
   const updateForm = useCallback(async () => {
-    if (
-      blobUrl &&
-      fileType &&
-      title &&
-      channels.length > 0 &&
-      true
-    ) {
+    if (blobUrl && fileType && title && channels.length > 0 && true) {
       if (fileType === "image") {
         var croppedImage = await getCroppedImg(blobUrl, croppedAreaPixels);
         var file = await fetch(croppedImage)
@@ -271,15 +256,6 @@ const SingleFolder = () => {
     setshowDropzone(true);
     setIsUpdate(false);
   };
-  const BackButton = async () => {
-    const config = {
-      headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
-      },
-    };
-    const res = await Axios.get("/open/folder/" + id, config);
-    navigate("/folderManagement");
-  };
   const handleInput = (e) => {
     setFormDatas({ ...FormDatas, [e.target.name]: e.target.value });
   };
@@ -303,8 +279,7 @@ const SingleFolder = () => {
         token: JSON.parse(localStorage.getItem("accessToken")),
       },
     };
-    await Axios.delete(`/news`, {
-      data: { newsId: fileId, folderId: id },
+    await Axios.delete(`/shorts/${fileId}`, {
       headers: config.headers,
     });
 
@@ -348,13 +323,6 @@ const SingleFolder = () => {
   const handlePlayerReady = (player) => {
     playerRef.current = player;
   };
-  const showAndHideBtn = (id) => {
-    if (showDesc.includes(id)) {
-      setshowDesc(showDesc.filter((item) => item !== id));
-    } else {
-      setshowDesc([...showDesc, id]);
-    }
-  };
   const handleDropdown = () => {
     setTimeout(() => {
       setshowDropdown(false);
@@ -371,7 +339,10 @@ const SingleFolder = () => {
       {!showDropzone && (
         <div className="container">
           <div className="showDropzone-container mt-2 mx-2">
-            <button onClick={BackButton} className="btn btn-danger mx-2">
+            <button
+              onClick={() => navigate("/folderManagement")}
+              className="btn btn-danger mx-2"
+            >
               <i className="bi bi-arrow-left-circle"> </i>
               Back
             </button>
@@ -502,7 +473,6 @@ const SingleFolder = () => {
           updateForm={updateForm}
           handleDropzoneSubmit={handleDropzoneSubmit}
           handlePlayerReady={handlePlayerReady}
-          Cropper={Cropper}
           crop={crop}
           setCrop={setCrop}
           zoom={zoom}

@@ -44,6 +44,7 @@ const Home = () => {
     };
     const { data } = await Axios.get("/all/news", config);
     setNews(data);
+    console.log(data);
   };
   const handlePlayerReady = (player) => {
     playerRef.current = player;
@@ -93,7 +94,7 @@ const Home = () => {
       <div className="d-flex flex-wrap showAllFile-container">
         {News.map(
           (file, index) =>
-            file.approved && (
+            JSON.parse(file.approved) && (
               <div key={file._id} className="">
                 <div
                   className="card mt-1 mx-1"
@@ -139,7 +140,7 @@ const Home = () => {
                         textAlign: "center",
                       }}
                     >
-                      by: {file.author.username}
+                      {/* by: {file.author.username} */}
                     </span>
                     {file.metaTitle.length > 20 ? (
                       <h5 className="card-title">
@@ -150,11 +151,11 @@ const Home = () => {
                     )}
                     <p className="card-text">
                       {showDesc.indexOf(file._id) !== -1
-                        ? file.description + " "
-                        : file.description.length < 34
-                        ? file.description
-                        : file.description.slice(0, 34) + "..."}
-                      {file.description.length > 34 && (
+                        ? file.metaDescription + " "
+                        : file.metaDescription.length < 34
+                        ? file.metaDescription
+                        : file.metaDescription.slice(0, 34) + "..."}
+                      {file.metaDescription.length > 34 && (
                         <button
                           className="show-more"
                           onClick={() => showAndHideBtn(file._id)}

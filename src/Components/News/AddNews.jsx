@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Alert from "../Alert/Alert";
 import Axios from "../Axios/Axios";
 import Style from "./News.module.css";
+import CKeditor from "./CKeditor";
 const AddNews = () => {
   const navigation = useNavigate();
   const [Categories, setCategories] = useState([]);
@@ -10,23 +11,20 @@ const AddNews = () => {
   const [NewsForm, setNewsForm] = useState({
     categoryInp: "",
     category: [],
-    showInSlider: false,
+    showInSlider: "True",
     sliderPriority: "",
     publishDateTime: "",
-    latestNews: false,
+    latestNews: "True",
     latestNewsPriority: "",
     file: "",
     aboutImage: "",
+    location: "",
     imageSource: "",
     metaTitle: "",
     metaDescription: "",
     hashTags: [],
     shortDescription: "",
     description: "",
-  });
-  const [alert, setalert] = useState({
-    show: false,
-    message: "",
   });
   const {
     categoryInp,
@@ -41,10 +39,15 @@ const AddNews = () => {
     imageSource,
     metaTitle,
     metaDescription,
+    location,
     hashTags,
     shortDescription,
     description,
   } = NewsForm;
+  const [alert, setalert] = useState({
+    show: false,
+    message: "",
+  });
   useEffect(() => {
     getCategories();
   }, []);
@@ -65,7 +68,9 @@ const AddNews = () => {
       },
     };
     const formData = new FormData();
-    formData.append("category", category);
+    category.forEach((e) => {
+      formData.append("categories[]", e._id);
+    });
     formData.append("showInSlider", showInSlider);
     formData.append("sliderPriority", sliderPriority);
     formData.append("publishDateTime", publishDateTime);
@@ -73,6 +78,7 @@ const AddNews = () => {
     formData.append("latestNewsPriority", latestNewsPriority);
     formData.append("file", e.target.file.files[0]);
     formData.append("aboutImage", aboutImage);
+    formData.append("location", location);
     formData.append("imageSource", imageSource);
     formData.append("metaTitle", metaTitle);
     formData.append("metaDescription", metaDescription);
@@ -169,8 +175,8 @@ const AddNews = () => {
               </div>
               {/* selected boxes */}
               <div className={Style.selectedBox}>
-                {category.map((item) => (
-                  <div className={Style.selectedItem}>
+                {category.map((item, i) => (
+                  <div key={i} className={Style.selectedItem}>
                     <button
                       onClick={() => handleSearch(item)}
                       className={Style.removeBtn}
@@ -273,6 +279,21 @@ const AddNews = () => {
                 className={Style.input}
               />
             </div>
+            {/* location */}
+            <div className={Style.inputGroup}>
+              <label className={Style.label} htmlFor="location">
+                Location:
+              </label>
+              <input
+                type="text"
+                name="location"
+                placeholder="Location"
+                id="location"
+                value={location}
+                onChange={handleChange}
+                className={Style.input}
+              />
+            </div>
             {/* About Image */}
             <div className={Style.inputGroup}>
               <label className={Style.label} htmlFor="aboutImage">
@@ -365,14 +386,15 @@ const AddNews = () => {
               <label className={Style.label} htmlFor="Description">
                 Description:
               </label>
-              <textarea
+              <CKeditor setNewsForm={setNewsForm} />
+              {/* <textarea
                 name="description"
-                placeholder=" description"
+                placeholder="Description"
                 id="Description"
                 value={description}
                 onChange={handleChange}
                 className={Style.input}
-              ></textarea>
+              ></textarea> */}
             </div>
             {/* Button Group */}
             <div className={Style.btnGroup}>

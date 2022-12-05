@@ -246,7 +246,16 @@ const Profile = () => {
           });
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          setalert({
+            show: true,
+            message: "Password does not match",
+          });
+          setTimeout(() => {
+            setalert({
+              show: false,
+              message: "",
+            });
+          }, 2000);
         });
     }
   };
@@ -391,7 +400,16 @@ const Profile = () => {
         setUserDatas(res.data.user);
       })
       .catch((err) => {
-        alert(err);
+        setalert({
+          show: true,
+          message: "Something went wrong",
+        });
+        setTimeout(() => {
+          setalert({
+            show: false,
+            message: "",
+          });
+        }, 2000);
       });
   };
   return (

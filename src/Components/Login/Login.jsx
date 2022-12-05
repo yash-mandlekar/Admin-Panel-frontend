@@ -59,6 +59,7 @@ const Login = () => {
       password: "admin@123",
       email: "admin@gmail.com",
     });
+    console.log(response);
     if (response.status === 200) {
       setuserData(response.data);
       localStorage.setItem(

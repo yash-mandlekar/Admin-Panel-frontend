@@ -13,9 +13,7 @@ const FolderManage = () => {
     id: null,
     edit: false,
   });
-  const [folders, setfolders] = useState([
-    { folderName: "India", _id: "12e21d3q2", author: "hi" },
-  ]);
+  const [folders, setfolders] = useState([]);
   const ShowFolder = async (id) => {
     const config = {
       headers: {

@@ -1088,3 +1088,7 @@ a[aria-expanded="true"] .white-arrow {
 .col-sm-3 h6 {
   font-size: 1.2vmax;
 }
+.ck-editor__main div{
+  height: 30vw;
+  width: 54vw;
+}
