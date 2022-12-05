@@ -186,18 +186,19 @@ const EditNews = () => {
               </div>
               {/* selected boxes */}
               <div className={Style.selectedBox}>
-                {categories && categories.map((item, i) => (
-                  <div key={i} className={Style.selectedItem}>
-                    <button
-                      onClick={() => handleSearch(item)}
-                      className={Style.removeBtn}
-                      key={item._id}
-                    >
-                      <i className="bi bi-x"></i>
-                      {item.englishName}
-                    </button>
-                  </div>
-                ))}
+                {categories &&
+                  categories.map((item, i) => (
+                    <div key={i} className={Style.selectedItem}>
+                      <button
+                        onClick={() => handleSearch(item)}
+                        className={Style.removeBtn}
+                        key={item._id}
+                      >
+                        <i className="bi bi-x"></i>
+                        {item.englishName}
+                      </button>
+                    </div>
+                  ))}
               </div>
             </div>
             {/* Show in Slider */}
@@ -414,7 +415,6 @@ const EditNews = () => {
                 className="btn btn-danger mx-auto col-5"
                 type="button"
               >
-                {/* <div className="d-grid gap-2 col-6 mx-auto mb-2"> */}
                 Cancel
               </button>
               {/* Submit Button */}
