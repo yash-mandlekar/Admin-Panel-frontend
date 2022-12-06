@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import Alert from "../Alert/Alert";
 import Axios from "../Axios/Axios";
 import Style from "../News/News.module.css";
-import moment from 'moment';
+import moment from "moment";
 const AddNews = () => {
   const navigation = useNavigate();
   const [NewsForm, setNewsForm] = useState({
     city: "",
     pageNo: "",
     image: "",
-    date: "",
+    date: moment(new Date()).format("YYYY-MM-DD"),
   });
   const [alert, setalert] = useState({
     show: false,
@@ -126,7 +126,7 @@ const AddNews = () => {
                 value={date}
                 onChange={handleChange}
                 className={Style.input}
-                max={moment().format('YYYY-MM-DD')}
+                max={moment().format("YYYY-MM-DD")}
                 required
               />
             </div>

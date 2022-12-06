@@ -8,6 +8,7 @@ const AddNews = () => {
   const navigation = useNavigate();
   const [Categories, setCategories] = useState([]);
   const [Focused, setFocused] = useState(false);
+  const [btnloader, setBtnloader] = useState(false);
   const [NewsForm, setNewsForm] = useState({
     categoryInp: "",
     category: [],
@@ -61,6 +62,7 @@ const AddNews = () => {
     setCategories(data);
   };
   const handleSubmit = async (e) => {
+    setBtnloader(true);
     e.preventDefault();
     const config = {
       headers: {
@@ -97,6 +99,7 @@ const AddNews = () => {
           message: "",
         });
       }, 3000);
+      setBtnloader(false);
       navigation("/news");
     } catch (err) {
       setalert({
@@ -408,9 +411,24 @@ const AddNews = () => {
                 Cancel
               </button>
               {/* Submit Button */}
-              <button type="submit" className="btn btn-dark mx-auto col-5">
-                Submit
-              </button>
+              {btnloader ? (
+                <button
+                  className="btn btn-dark mx-auto col-5"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    className="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  Loading...
+                </button>
+              ) : (
+                <button className="btn btn-dark mx-auto col-5" type="submit">
+                  Submit
+                </button>
+              )}
             </div>
           </form>
         </div>

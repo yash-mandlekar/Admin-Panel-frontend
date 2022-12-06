@@ -6,7 +6,7 @@ import ListComp from "./ListComp";
 
 const Editor = () => {
   const [List, setList] = useState([]);
-
+  const [loader, setLoader] = useState(true);
   const GetEditor = async () => {
     const config = {
       headers: {
@@ -15,6 +15,7 @@ const Editor = () => {
     };
     const response = await Axios.get("/editor", config);
     setList(response.data.data);
+    setLoader(false);
   };
   useEffect(() => {
     GetEditor();
@@ -44,7 +45,14 @@ const Editor = () => {
     const response = await Axios.post("/block-user", { user2: id }, config);
     GetEditor();
   };
-  return <ListComp List={List} confirmBox={confirmBox} role="Editors" />;
+  return (
+    <ListComp
+      List={List}
+      loader={loader}
+      confirmBox={confirmBox}
+      role="Editors"
+    />
+  );
 };
 
 export default Editor;

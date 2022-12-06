@@ -73,8 +73,8 @@ const UserProfile = () => {
                   <img
                     src={UserProfile.profileImage}
                     alt="Generic placeholder image"
-                    className="img-fluid img-thumbnail "
-                    style={{ width: "100%", zIndex: "1" }}
+                    className="img-thumbnail"
+                    style={{maxWidth: "170px",objectFit: "contain"}}
                   />
                 </div>
               </div>

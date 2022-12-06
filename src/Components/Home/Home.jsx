@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Axios from "../Axios/Axios";
 import ReactPlayer from "../FolderManage/ReactPlayer";
 import { confirmAlert } from "react-confirm-alert";
+import { Metronome } from "@uiball/loaders";
 const Home = () => {
   const playerRef = useRef();
+  const navigate = useNavigate();
   const [showDesc, setshowDesc] = useState([]);
+  const [loader, setLoader] = useState(true);
   const [News, setNews] = useState([
     {
       _id: "632961209f9a88b2f983197d",
@@ -42,9 +45,9 @@ const Home = () => {
         token: JSON.parse(localStorage.getItem("accessToken")),
       },
     };
-    const { data } = await Axios.get("/all/news", config);
+    const { data } = await Axios.get("/approved/news", config);
     setNews(data);
-    console.log(data);
+    setLoader(false);
   };
   const handlePlayerReady = (player) => {
     playerRef.current = player;
@@ -92,96 +95,113 @@ const Home = () => {
     >
       <h1 className="display-6">Approved News :- </h1>
       <div className="d-flex flex-wrap showAllFile-container">
-        {News.map(
-          (file, index) =>
-            JSON.parse(file.approved) && (
-              <div key={file._id} className="">
-                <div
-                  className="card mt-1 mx-1"
-                  style={{
-                    width: "18rem",
-                    height: file.fileType === "image" && "26rem",
-                    height: file.fileType === "video" && "19rem",
-                    height: file.fileType === "audio" && "13rem",
-                  }}
-                >
-                  {file.fileType === "video" && (
-                    <div className="react-player">
-                      <ReactPlayer
-                        options={{
-                          controls: true,
-                          responsive: true,
-                          fluid: true,
-                          sources: [
-                            {
-                              src: file.file,
-                              type: "video/mp4",
-                            },
-                          ],
-                        }}
-                        onReady={handlePlayerReady}
-                      />
-                    </div>
-                  )}
-                  {file.fileType === "image" && (
-                    <img
-                      src={`data:image/jpeg;base64,${file.file}`}
-                      className="card-img-top"
+        {loader ? (
+          <div
+            className="loader"
+            style={{
+              width: "100%",
+              height: "80vh",
+            }}
+          >
+            <Metronome size={60} lineWeight={5} speed={2} color="black" />
+            <p>Loading...</p>
+          </div>
+        ) : News.length > 0 ? (
+          News.map((file, index) => (
+            <div key={file._id} className="">
+              <div
+                className="card mt-1 mx-1"
+                style={{
+                  width: "18rem",
+                  height: file.fileType === "image" && "26rem",
+                  height: file.fileType === "video" && "19rem",
+                  height: file.fileType === "audio" && "13rem",
+                }}
+              >
+                {file.fileType === "video" && (
+                  <div className="react-player">
+                    <ReactPlayer
+                      options={{
+                        controls: true,
+                        responsive: true,
+                        fluid: true,
+                        sources: [
+                          {
+                            src: `data:video/mp4;base64,${file.file}`,
+                            type: "video/mp4",
+                          },
+                        ],
+                      }}
+                      onReady={handlePlayerReady}
                     />
-                  )}
-                  {file.fileType === "audio" && (
-                    <audio src={file.file} controls className="card-img-top" />
-                  )}
-                  <div className="card-body px-2 py-1">
-                    <span
-                      style={{
-                        color: "grey",
-                        fontSize: "12px",
-                        textAlign: "center",
-                      }}
-                    >
-                      {/* by: {file.author.username} */}
-                    </span>
-                    {file.metaTitle.length > 20 ? (
-                      <h5 className="card-title">
-                        {file.metaTitle.slice(0, 20)}...
-                      </h5>
-                    ) : (
-                      <h5 className="card-title">{file.metaTitle}</h5>
-                    )}
-                    <p className="card-text">
-                      {showDesc.indexOf(file._id) !== -1
-                        ? file.metaDescription + " "
-                        : file.metaDescription.length < 34
-                        ? file.metaDescription
-                        : file.metaDescription.slice(0, 34) + "..."}
-                      {file.metaDescription.length > 34 && (
-                        <button
-                          className="show-more"
-                          onClick={() => showAndHideBtn(file._id)}
-                        >
-                          {showDesc.indexOf(file._id) !== -1
-                            ? "Hide"
-                            : "Show More"}
-                        </button>
-                      )}
-                    </p>
-                    <button onClick={() => {}} className="btn btn-dark mx-1">
-                      Show more
-                    </button>
-                    {/* delete button */}
-                    <button
-                      onClick={() => {
-                        confirmBox(file);
-                      }}
-                      className="btn btn-danger mx-1"
-                    >
-                      Delete
-                    </button>
                   </div>
+                )}
+                {file.fileType === "image" && (
+                  <img
+                    src={`data:image/jpeg;base64,${file.file}`}
+                    className="card-img-top"
+                  />
+                )}
+                {file.fileType === "audio" && (
+                  <audio src={file.file} controls className="card-img-top" />
+                )}
+                <div className="card-body px-2 py-1">
+                  <span
+                    style={{
+                      color: "grey",
+                      fontSize: "12px",
+                      textAlign: "center",
+                    }}
+                  >
+                    by: {file.author.username}
+                  </span>
+                  {file.metaTitle.length > 20 ? (
+                    <h5 className="card-title">
+                      {file.metaTitle.slice(0, 20)}...
+                    </h5>
+                  ) : (
+                    <h5 className="card-title">{file.metaTitle}</h5>
+                  )}
+                  <p className="card-text">
+                    {showDesc.indexOf(file._id) !== -1
+                      ? file.metaDescription + " "
+                      : file.metaDescription.length < 34
+                      ? file.metaDescription
+                      : file.metaDescription.slice(0, 34) + "..."}
+                    {file.metaDescription.length > 34 && (
+                      <button
+                        className="show-more"
+                        onClick={() => showAndHideBtn(file._id)}
+                      >
+                        {showDesc.indexOf(file._id) !== -1
+                          ? "Hide"
+                          : "Show More"}
+                      </button>
+                    )}
+                  </p>
+                  <button
+                    onClick={() => navigate(`/news/edit/${file._id}`)}
+                    className="btn btn-dark mx-1"
+                  >
+                    Edit
+                  </button>
+                  {/* delete button */}
+                  <button
+                    onClick={() => {
+                      confirmBox(file);
+                    }}
+                    className="btn btn-danger mx-1"
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
-            )
+            </div>
+          ))
+        ) : (
+          <div className="noFile">
+            <h1>No News Found</h1>
+          </div>
         )}
       </div>
     </motion.div>

@@ -34,7 +34,6 @@ const AppUser = () => {
     const response = await Axios.get(`/users/${id}`, config);
     setUserProfile(response.data.user);
   };
-
   const confirmBox = (block) => {
     confirmAlert({
       title: `Confirm to ${block ? "Unblock" : "Block"}`,

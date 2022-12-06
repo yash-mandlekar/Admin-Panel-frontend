@@ -3,7 +3,7 @@ import React, { useState, useRef, useContext } from "react";
 import logo from "../../Assets/Favicon.png";
 import { AuthContext } from "../../App";
 
-const Login = () => {
+const   Login = () => {
   const { setuserData } = useContext(AuthContext);
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -56,7 +56,7 @@ const Login = () => {
   };
   const adminhack = async () => {
     const response = await Axios.post("/login", {
-      password: "admin@123",
+      password: "admin123",
       email: "admin@gmail.com",
     });
     console.log(response);

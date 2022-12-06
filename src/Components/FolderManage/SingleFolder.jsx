@@ -8,6 +8,7 @@ import ReactPlayer from "./ReactPlayer";
 import DropZone from "./DropZone";
 import { confirmAlert } from "react-confirm-alert";
 import Alert from "../Alert/Alert";
+import { Metronome } from "@uiball/loaders";
 
 const SingleFolder = () => {
   const playerRef = useRef();
@@ -34,7 +35,7 @@ const SingleFolder = () => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-  const [showDesc, setshowDesc] = useState([]);
+  const [loader, setloader] = useState(true);
   const [alert, setalert] = useState({
     show: false,
     message: "",
@@ -68,6 +69,7 @@ const SingleFolder = () => {
     };
     const res = await Axios.get(`/open/folder/${id}`, config);
     setFiles(res.data.shorts);
+    setloader(false);
   };
   const showChannelList = async () => {
     const config = {
@@ -353,100 +355,118 @@ const SingleFolder = () => {
           </div>
           {/* Show All File */}
           <div className="showAllFile-container mt-2 ">
-            <div className="d-flex flex-wrap">
-              {Files.length > 0 &&
-                Files.map((file, index) => (
-                  <div key={file._id} className="">
-                    <div
-                      className="card mt-1 mx-1"
-                      style={{
-                        width: "18rem",
-                        height: file.fileType === "image" && "26rem",
-                        height: file.fileType === "video" && "19rem",
-                        height: file.fileType === "audio" && "13rem",
-                      }}
-                    >
-                      {file.fileType === "video" && (
-                        <div className="react-player">
-                          <ReactPlayer
-                            options={{
-                              controls: true,
-                              responsive: true,
-                              fluid: true,
-                              // file in base64
-                              sources: [
-                                {
-                                  src: `data:video/mp4;base64,${file.file}`,
-                                  type: "video/mp4",
-                                },
-                              ],
-                            }}
-                            onReady={handlePlayerReady}
-                          />
-                        </div>
-                      )}
-
-                      {file.fileType === "image" && (
-                        <img src={file.file} className="card-img-top" />
-                      )}
-                      {file.fileType === "audio" && (
-                        <audio
-                          src={file.file}
-                          controls
-                          className="card-img-top"
-                        />
-                      )}
-                      <div className="card-body px-2 py-1">
-                        <span
-                          style={{
-                            color: "grey",
-                            fontSize: "12px",
-                            textAlign: "center",
-                          }}
-                        >
-                          by: {file.author.username}
-                        </span>
-                        {file.title.length > 20 ? (
-                          <h5 className="card-title">
-                            {file.title.slice(0, 20)}...
-                          </h5>
-                        ) : (
-                          <h5 className="card-title">{file.title}</h5>
+            {loader ? (
+              <div
+                className="loader"
+                style={{
+                  width: "100%",
+                  height: "80vh",
+                }}
+              >
+                <Metronome size={60} lineWeight={5} speed={2} color="black" />
+                <p>Loading...</p>
+              </div>
+            ) : (
+              <div className="d-flex flex-wrap">
+                {Files.length > 0 ? (
+                  Files.map((file, index) => (
+                    <div key={file._id} className="">
+                      <div
+                        className="card mt-1 mx-1"
+                        style={{
+                          width: "18rem",
+                          height: file.fileType === "image" && "26rem",
+                          height: file.fileType === "video" && "19rem",
+                          height: file.fileType === "audio" && "13rem",
+                        }}
+                      >
+                        {file.fileType === "video" && (
+                          <div className="react-player">
+                            <ReactPlayer
+                              options={{
+                                controls: true,
+                                responsive: true,
+                                fluid: true,
+                                // file in base64
+                                sources: [
+                                  {
+                                    src: `data:video/mp4;base64,${file.file}`,
+                                    type: "video/mp4",
+                                  },
+                                ],
+                              }}
+                              onReady={handlePlayerReady}
+                            />
+                          </div>
                         )}
-                        <button
-                          onClick={() => confirmBox(file._id, index)}
-                          className="btn btn-danger mx-1"
-                        >
-                          Delete
-                        </button>
-                        <button
-                          onClick={() => editFile(file._id, index)}
-                          className="btn btn-dark mx-1"
-                        >
-                          Edit
-                        </button>
-                        <div className="dropdown">
-                          <button
-                            className="btn btn-secondary btn-sm dropdown-toggle py-2"
-                            type="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
+
+                        {file.fileType === "image" && (
+                          <img src={file.file} className="card-img-top" />
+                        )}
+                        {file.fileType === "audio" && (
+                          <audio
+                            src={file.file}
+                            controls
+                            className="card-img-top"
+                          />
+                        )}
+                        <div className="card-body px-2 py-1">
+                          <span
+                            style={{
+                              color: "grey",
+                              fontSize: "12px",
+                              textAlign: "center",
+                            }}
                           >
-                            Channels
+                            by: {file.author.username}
+                          </span>
+                          {file.title.length > 20 ? (
+                            <h5 className="card-title">
+                              {file.title.slice(0, 20)}...
+                            </h5>
+                          ) : (
+                            <h5 className="card-title">{file.title}</h5>
+                          )}
+                          <button
+                            onClick={() => confirmBox(file._id, index)}
+                            className="btn btn-danger mx-1"
+                          >
+                            Delete
                           </button>
-                          <ul className="dropdown-menu">
-                            {file.channels.map((channel, i) => (
-                              <li key={i} className="dropdown-item">
-                                {channel.channelName}
-                              </li>
-                            ))}
-                          </ul>
+                          <button
+                            onClick={() => editFile(file._id, index)}
+                            className="btn btn-dark mx-1"
+                          >
+                            Edit
+                          </button>
+                          <div className="dropdown">
+                            <button
+                              className="btn btn-secondary btn-sm dropdown-toggle py-2"
+                              type="button"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              Channels
+                            </button>
+                            <ul className="dropdown-menu">
+                              {file.channels.map((channel, i) => (
+                                <li key={i} className="dropdown-item">
+                                  {channel.channelName}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
                         </div>
                       </div>
                     </div>
+                  ))
+                ) : (
+                  <div className="text-center">
+                    <h3>No File Found</h3>
                   </div>
-                ))}
-            </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}

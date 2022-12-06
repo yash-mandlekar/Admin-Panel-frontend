@@ -3,10 +3,12 @@ import Axios from "../Axios/Axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../App";
 import { motion } from "framer-motion";
+import { Metronome } from "@uiball/loaders";
 
 const FolderManage = () => {
   const navigate = useNavigate();
   const { userData } = useContext(AuthContext);
+  const [loader, setLoader] = useState(true);
   const [folderInput, setfolderInput] = useState("");
   const [dropdown, setdropdown] = useState({
     status: false,
@@ -21,6 +23,7 @@ const FolderManage = () => {
       },
     };
     const res = await Axios.get("/folder", config);
+    setLoader(false);
     setfolders(res.data);
   };
   useEffect(() => {
@@ -189,65 +192,85 @@ const FolderManage = () => {
                           <span>Create</span>
                         </button>
                       </div>
-
-                      {folders.map((folder) => (
+                      {loader ? (
                         <div
-                          key={folder._id}
-                          className="folder"
-                          onContextMenu={(e) =>
-                            handleContextMenu(e, folder._id)
-                          }
-                          onDoubleClick={() => handleOpenFolder(folder._id)}
+                          className="loader"
+                          style={{
+                            width: "80vw",
+                            height: "15vh",
+                          }}
                         >
-                          <i id={folder._id} className="bi bi-folder-fill"></i>
-                          <div className="folder-name">
-                            {dropdown.id === folder._id && dropdown.edit ? (
-                              <form
-                                onSubmit={(e) =>
-                                  ChangeFolderName(e, folder._id)
-                                }
+                          <Metronome
+                            size={40}
+                            lineWeight={5}
+                            speed={2}
+                            color="black"
+                          />
+                          <p>Loading...</p>
+                        </div>
+                      ) : (
+                        folders.map((folder) => (
+                          <div
+                            key={folder._id}
+                            className="folder"
+                            onContextMenu={(e) =>
+                              handleContextMenu(e, folder._id)
+                            }
+                            onDoubleClick={() => handleOpenFolder(folder._id)}
+                          >
+                            <i
+                              id={folder._id}
+                              className="bi bi-folder-fill"
+                            ></i>
+                            <div className="folder-name">
+                              {dropdown.id === folder._id && dropdown.edit ? (
+                                <form
+                                  onSubmit={(e) =>
+                                    ChangeFolderName(e, folder._id)
+                                  }
+                                >
+                                  <input
+                                    type="text"
+                                    name="folderName"
+                                    defaultValue={folder.folderName}
+                                  />
+                                </form>
+                              ) : (
+                                <span>{folder.folderName}</span>
+                              )}
+                            </div>
+                            <span
+                              style={{
+                                color: "grey",
+                                fontSize: "10px",
+                                textAlign: "center",
+                              }}
+                            >
+                              by: {folder.author.username}
+                            </span>
+                            {/* dropdown menu */}
+                            {dropdown.status && dropdown.id === folder._id && (
+                              <div
+                                className="dropdown-menu"
+                                style={{ display: "block" }}
                               >
-                                <input
-                                  type="text"
-                                  name="folderName"
-                                  defaultValue={folder.folderName}
-                                />
-                              </form>
-                            ) : (
-                              <span>{folder.folderName}</span>
+                                <button
+                                  className="dropdown-item"
+                                  onClick={() => handleEditFolder(folder._id)}
+                                >
+                                  Edit
+                                </button>
+                                <button
+                                  className="dropdown-item"
+                                  onClick={() => handleDeleteFolder(folder._id)}
+                                >
+                                  Delete
+                                </button>
+                              </div>
                             )}
                           </div>
-                          <span
-                            style={{
-                              color: "grey",
-                              fontSize: "10px",
-                              textAlign: "center",
-                            }}
-                          >
-                            by: {folder.author.username}
-                          </span>
-                          {/* dropdown menu */}
-                          {dropdown.status && dropdown.id === folder._id && (
-                            <div
-                              className="dropdown-menu"
-                              style={{ display: "block" }}
-                            >
-                              <button
-                                className="dropdown-item"
-                                onClick={() => handleEditFolder(folder._id)}
-                              >
-                                Edit
-                              </button>
-                              <button
-                                className="dropdown-item"
-                                onClick={() => handleDeleteFolder(folder._id)}
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      ))}
+                        ))
+                      )}
                     </div>
                   </div>
                 </div>

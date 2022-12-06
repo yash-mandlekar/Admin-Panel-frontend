@@ -9,8 +9,8 @@ const EditNews = () => {
   const navigation = useNavigate();
   const [Categories, setCategories] = useState([]);
   const [Focused, setFocused] = useState(false);
+  const [categoryInp, setcategoryInp] = useState("");
   const [NewsForm, setNewsForm] = useState({
-    categoryInp: "",
     categories: [],
     showInSlider: "True",
     sliderPriority: "",
@@ -28,7 +28,6 @@ const EditNews = () => {
     description: "",
   });
   const {
-    categoryInp,
     categories,
     showInSlider,
     sliderPriority,
@@ -45,6 +44,7 @@ const EditNews = () => {
     shortDescription,
     description,
   } = NewsForm;
+  console.log(categories);
   const [alert, setalert] = useState({
     show: false,
     message: "",
@@ -61,7 +61,6 @@ const EditNews = () => {
     };
     const { data } = await Axios.get(`/news/${id}`, config);
     setNewsForm(data);
-    console.log(data);
   };
   const getCategories = async () => {
     const config = {
@@ -98,10 +97,10 @@ const EditNews = () => {
     formData.append("shortDescription", shortDescription);
     formData.append("description", description);
     try {
-      await Axios.put("/news", formData, config);
+      await Axios.put("/news/" + id, formData, config);
       setalert({
         show: true,
-        message: "News Added Successfully",
+        message: "News updated Successfully",
       });
       setTimeout(() => {
         setalert({
@@ -109,7 +108,7 @@ const EditNews = () => {
           message: "",
         });
       }, 3000);
-      navigation("/news");
+      navigation(-1);
     } catch (err) {
       setalert({
         show: true,
@@ -124,14 +123,15 @@ const EditNews = () => {
     }
   };
   const handleSearch = (e) => {
-    const cpy = [...NewsForm.category];
+    const cpy = [...NewsForm.categories];
     const index = cpy.indexOf(e);
     if (index === -1) {
       cpy.push(e);
     } else {
       cpy.splice(index, 1);
     }
-    setNewsForm({ ...NewsForm, categoryInp: "", category: cpy });
+    setNewsForm({ ...NewsForm, categories: cpy });
+    setcategoryInp("");
   };
   const handleChange = (e) => {
     setNewsForm({ ...NewsForm, [e.target.name]: e.target.value });
@@ -153,7 +153,8 @@ const EditNews = () => {
                 name="categoryInp"
                 placeholder="Search categories by Name"
                 id=""
-                onChange={handleChange}
+                value={categoryInp}
+                onChange={(e) => setcategoryInp(e.target.value)}
                 onFocus={() => setFocused(true)}
                 onBlur={() => {
                   setTimeout(() => {
@@ -227,7 +228,7 @@ const EditNews = () => {
                 name="sliderPriority"
                 placeholder="Slider Priority"
                 id="sliderPriority"
-                // value={sliderPriority}
+                value={sliderPriority}
                 onChange={handleChange}
                 className={Style.input}
               />
@@ -398,20 +399,12 @@ const EditNews = () => {
                 Description:
               </label>
               <CKeditor description={description} setNewsForm={setNewsForm} />
-              {/* <textarea
-                name="description"
-                placeholder="Description"
-                id="Description"
-                // value={description}
-                onChange={handleChange}
-                className={Style.input}
-              ></textarea> */}
             </div>
             {/* Button Group */}
             <div className={Style.btnGroup}>
               {/* Cancel Button */}
               <button
-                onClick={() => navigation("/news")}
+                onClick={() => navigation(-1)}
                 className="btn btn-danger mx-auto col-5"
                 type="button"
               >

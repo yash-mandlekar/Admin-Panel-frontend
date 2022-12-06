@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Axios from "../Axios/Axios";
 import { confirmAlert } from "react-confirm-alert";
 import Alert from "../Alert/Alert";
+import { Metronome } from "@uiball/loaders";
 const Channel = () => {
   const [ChannelForm, setChannelForm] = useState({
     channelName: "",
@@ -30,6 +31,7 @@ const Channel = () => {
   const [UpdateForm, setUpdateForm] = useState(false);
   const [slider, setslider] = useState([]);
   const [showDesc, setshowDesc] = useState([]);
+  const [loader, setLoader] = useState(true);
   const [alert, setalert] = useState({
     show: false,
     message: "",
@@ -52,6 +54,7 @@ const Channel = () => {
       },
     };
     const res = await Axios.get("/channel", config);
+    setLoader(false);
     setChannelList(res.data);
   };
   const showForm = () => {
@@ -641,103 +644,189 @@ const Channel = () => {
       {!ShowForm && (
         <div className="mt-3 overflow-auto channellist">
           <div className="d-flex justify-content-start flex-wrap">
-            {ChannelList.map((item, index) => (
-              <div key={item._id}>
-                {item.layout === "horizontal" && item.type === "fixed" && (
-                  <div className="row mx-1 my-1" style={{ width: "28rem" }}>
-                    <div className="">
-                      <div className="card text-center">
-                        {/* Centered Play Icon */}
-                        {item.play === "true" && (
-                          <div className="card-img-overlay d-flex justify-content-center align-items-center">
-                            <i
-                              className="bi bi-play-circle-fill"
-                              style={{
-                                fontSize: "3rem",
-                                color: "white",
-                                marginBottom:
-                                  item.titlePosition === "bottom"
-                                    ? "7rem"
-                                    : "3rem",
-                              }}
-                            ></i>
-                          </div>
-                        )}
-                        <div className="card-body">
-                          {item.titlePosition === "top" && (
-                            <h5 className="card-title">{item.channelName}</h5>
+            {loader ? (
+              <div
+                className="loader"
+                style={{
+                  width: "80vw",
+                  height: "70vh",
+                }}
+              >
+                <Metronome size={60} lineWeight={5} speed={2} color="black" />
+                <p>Loading...</p>
+              </div>
+            ) : ChannelList.length > 0 ? (
+              ChannelList.map((item, index) => (
+                <div key={item._id}>
+                  {item.layout === "horizontal" && item.type === "fixed" && (
+                    <div className="row mx-1 my-1" style={{ width: "28rem" }}>
+                      <div className="">
+                        <div className="card text-center">
+                          {/* Centered Play Icon */}
+                          {item.play === "true" && (
+                            <div className="card-img-overlay d-flex justify-content-center align-items-center">
+                              <i
+                                className="bi bi-play-circle-fill"
+                                style={{
+                                  fontSize: "3rem",
+                                  color: "white",
+                                  marginBottom:
+                                    item.titlePosition === "bottom"
+                                      ? "7rem"
+                                      : "3rem",
+                                }}
+                              ></i>
+                            </div>
                           )}
-                          <img
-                            src="https://images.unsplash.com/photo-1434725039720-aaad6dd32dfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bGFuZHNjYXBlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                            className="card-img-top"
-                            alt="..."
-                          />
-                          {item.titlePosition === "bottom" && (
-                            <h5 className="card-title">{item.channelName}</h5>
-                          )}
-                          <p className="card-text">
-                            {showDesc.indexOf(item._id) !== -1
-                              ? item.description + " "
-                              : item.description.length < 35
-                              ? item.description
-                              : item.description.slice(0, 35) + "..."}
-                            {item.description.length > 35 && (
-                              <button
-                                className="show-more"
-                                onClick={() => showAndHideBtn(item._id)}
-                              >
-                                {showDesc.indexOf(item._id) !== -1
-                                  ? "Hide"
-                                  : "Show More"}
-                              </button>
-                            )}
-                          </p>
-                          <button
-                            onClick={() => confirmBox(item._id)}
-                            className="btn btn-danger mx-1"
-                          >
-                            Delete
-                          </button>
-                          <button
-                            onClick={() => handleEditChannel(item._id)}
-                            className="btn btn-dark mx-1"
-                          >
-                            Edit
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                {item.layout === "horizontal" && item.type === "slider" && (
-                  <div className="container mt-3">
-                    <div className="row">
-                      <div className="col-12">
-                        <div
-                          className="card text-center"
-                          style={{ width: "28rem" }}
-                        >
                           <div className="card-body">
                             {item.titlePosition === "top" && (
                               <h5 className="card-title">{item.channelName}</h5>
                             )}
-                            <div className="d-flex">
-                              {Array.from(Array(item.partition).keys()).map(
-                                (e, i) => {
-                                  return (
-                                    <img
-                                      key={i}
-                                      src="https://images.unsplash.com/photo-1610123598147-f632aa18b275?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fGxhbmQlMjBzY2FwZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                                      className="d-block"
-                                      style={{
-                                        width: `${26 / item.partition}rem`,
-                                        marginRight: "1px",
-                                      }}
-                                    />
-                                  );
-                                }
+                            <img
+                              src="https://images.unsplash.com/photo-1434725039720-aaad6dd32dfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bGFuZHNjYXBlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                              className="card-img-top"
+                              alt="..."
+                            />
+                            {item.titlePosition === "bottom" && (
+                              <h5 className="card-title">{item.channelName}</h5>
+                            )}
+                            <p className="card-text">
+                              {showDesc.indexOf(item._id) !== -1
+                                ? item.description + " "
+                                : item.description.length < 35
+                                ? item.description
+                                : item.description.slice(0, 35) + "..."}
+                              {item.description.length > 35 && (
+                                <button
+                                  className="show-more"
+                                  onClick={() => showAndHideBtn(item._id)}
+                                >
+                                  {showDesc.indexOf(item._id) !== -1
+                                    ? "Hide"
+                                    : "Show More"}
+                                </button>
                               )}
+                            </p>
+                            <button
+                              onClick={() => confirmBox(item._id)}
+                              className="btn btn-danger mx-1"
+                            >
+                              Delete
+                            </button>
+                            <button
+                              onClick={() => handleEditChannel(item._id)}
+                              className="btn btn-dark mx-1"
+                            >
+                              Edit
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {item.layout === "horizontal" && item.type === "slider" && (
+                    <div className="container mt-3">
+                      <div className="row">
+                        <div className="col-12">
+                          <div
+                            className="card text-center"
+                            style={{ width: "28rem" }}
+                          >
+                            <div className="card-body">
+                              {item.titlePosition === "top" && (
+                                <h5 className="card-title">
+                                  {item.channelName}
+                                </h5>
+                              )}
+                              <div className="d-flex">
+                                {Array.from(Array(item.partition).keys()).map(
+                                  (e, i) => {
+                                    return (
+                                      <img
+                                        key={i}
+                                        src="https://images.unsplash.com/photo-1610123598147-f632aa18b275?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fGxhbmQlMjBzY2FwZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+                                        className="d-block"
+                                        style={{
+                                          width: `${26 / item.partition}rem`,
+                                          marginRight: "1px",
+                                        }}
+                                      />
+                                    );
+                                  }
+                                )}
+                              </div>
+                              {item.titlePosition === "bottom" && (
+                                <h5 className="card-title">
+                                  {item.channelName}
+                                </h5>
+                              )}
+                              <p className="card-text">
+                                {showDesc.indexOf(item._id) !== -1
+                                  ? item.description + " "
+                                  : item.description.length < 35
+                                  ? item.description
+                                  : item.description.slice(0, 35) + "..."}
+                                {item.description.length > 35 && (
+                                  <button
+                                    className="show-more"
+                                    onClick={() => showAndHideBtn(item._id)}
+                                  >
+                                    {" "}
+                                    {showDesc.indexOf(item._id) !== -1
+                                      ? "Hide"
+                                      : "Show More"}
+                                  </button>
+                                )}
+                              </p>
+                              <button
+                                onClick={() => confirmBox(item._id)}
+                                className="btn btn-danger mx-1"
+                              >
+                                Delete
+                              </button>
+                              <button
+                                onClick={() => handleEditChannel(item._id)}
+                                className="btn btn-dark mx-1"
+                              >
+                                Edit
+                              </button>
                             </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {item.layout === "vertical" && item.type === "fixed" && (
+                    <div className="row mx-1 my-1" style={{ width: "28rem" }}>
+                      <div className="">
+                        <div
+                          className="card text-center"
+                          style={{ width: "18rem" }}
+                        >
+                          {item.play === "true" && (
+                            <div className="card-img-overlay d-flex justify-content-center align-items-center">
+                              <i
+                                className="bi bi-play-circle-fill"
+                                style={{
+                                  fontSize: "3rem",
+                                  color: "white",
+                                  marginBottom:
+                                    item.titlePosition === "bottom"
+                                      ? "7rem"
+                                      : "3rem",
+                                }}
+                              ></i>
+                            </div>
+                          )}
+                          <div className="card-body">
+                            {item.titlePosition === "top" && (
+                              <h5 className="card-title">{item.channelName}</h5>
+                            )}
+                            <img
+                              src="https://images.unsplash.com/photo-1662952208058-2e0dccfe8f7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNjh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                              className="card-img-top"
+                              alt="..."
+                            />
                             {item.titlePosition === "bottom" && (
                               <h5 className="card-title">{item.channelName}</h5>
                             )}
@@ -775,241 +864,108 @@ const Channel = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
-                )}
-                {item.layout === "vertical" && item.type === "fixed" && (
-                  <div className="row mx-1 my-1" style={{ width: "28rem" }}>
-                    <div className="">
-                      <div
-                        className="card text-center"
-                        style={{ width: "18rem" }}
-                      >
-                        {item.play === "true" && (
-                          <div className="card-img-overlay d-flex justify-content-center align-items-center">
-                            <i
-                              className="bi bi-play-circle-fill"
-                              style={{
-                                fontSize: "3rem",
-                                color: "white",
-                                marginBottom:
-                                  item.titlePosition === "bottom"
-                                    ? "7rem"
-                                    : "3rem",
-                              }}
-                            ></i>
-                          </div>
-                        )}
-                        <div className="card-body">
-                          {item.titlePosition === "top" && (
-                            <h5 className="card-title">{item.channelName}</h5>
-                          )}
-                          <img
-                            src="https://images.unsplash.com/photo-1662952208058-2e0dccfe8f7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNjh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                            className="card-img-top"
-                            alt="..."
-                          />
-                          {item.titlePosition === "bottom" && (
-                            <h5 className="card-title">{item.channelName}</h5>
-                          )}
-                          <p className="card-text">
-                            {showDesc.indexOf(item._id) !== -1
-                              ? item.description + " "
-                              : item.description.length < 35
-                              ? item.description
-                              : item.description.slice(0, 35) + "..."}
-                            {item.description.length > 35 && (
-                              <button
-                                className="show-more"
-                                onClick={() => showAndHideBtn(item._id)}
-                              >
-                                {" "}
+                  )}
+                  {item.layout === "vertical" && item.type === "slider" && (
+                    <div className="container mt-3">
+                      <div className="row">
+                        <div className="col-12">
+                          <div
+                            className="card text-center"
+                            style={{ width: "25rem" }}
+                          >
+                            <div className="card-body">
+                              {item.titlePosition === "top" && (
+                                <h5 className="card-title">
+                                  {item.channelName}
+                                </h5>
+                              )}
+                              <div className="d-flex">
+                                {item.slider}
+                                {Array.from(Array(item.partition).keys()).map(
+                                  (e, i) => {
+                                    return (
+                                      <img
+                                        key={i}
+                                        src="https://images.unsplash.com/photo-1564754943164-e83c08469116?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8dmVydGljYWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+                                        className="d-block"
+                                        style={{
+                                          height: `${34 / item.partition}rem`,
+                                          marginRight: "1px",
+                                        }}
+                                      />
+                                    );
+                                  }
+                                )}
+                              </div>
+                              {item.titlePosition === "bottom" && (
+                                <h5 className="card-title">
+                                  {item.channelName}
+                                </h5>
+                              )}
+                              <p className="card-text">
                                 {showDesc.indexOf(item._id) !== -1
-                                  ? "Hide"
-                                  : "Show More"}
+                                  ? item.description + " "
+                                  : item.description.length < 35
+                                  ? item.description
+                                  : item.description.slice(0, 35) + "..."}
+                                {item.description.length > 35 && (
+                                  <button
+                                    className="show-more"
+                                    onClick={() => showAndHideBtn(item._id)}
+                                  >
+                                    {" "}
+                                    {showDesc.indexOf(item._id) !== -1
+                                      ? "Hide"
+                                      : "Show More"}
+                                  </button>
+                                )}
+                              </p>
+                              <button
+                                onClick={() => confirmBox(item._id)}
+                                className="btn btn-danger mx-1"
+                              >
+                                Delete
                               </button>
-                            )}
-                          </p>
-                          <button
-                            onClick={() => confirmBox(item._id)}
-                            className="btn btn-danger mx-1"
-                          >
-                            Delete
-                          </button>
-                          <button
-                            onClick={() => handleEditChannel(item._id)}
-                            className="btn btn-dark mx-1"
-                          >
-                            Edit
-                          </button>
+                              <button
+                                onClick={() => handleEditChannel(item._id)}
+                                className="btn btn-dark mx-1"
+                              >
+                                Edit
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                )}
-                {item.layout === "vertical" && item.type === "slider" && (
-                  <div className="container mt-3">
-                    <div className="row">
-                      <div className="col-12">
-                        <div
-                          className="card text-center"
-                          style={{ width: "25rem" }}
-                        >
+                  )}
+                  {item.layout === "square" && item.type === "fixed" && (
+                    <div className="row mx-1 my-1" style={{ width: "28rem" }}>
+                      <div className="">
+                        <div className="card text-center">
+                          {item.play === "true" && (
+                            <div className="card-img-overlay d-flex justify-content-center align-items-center">
+                              <i
+                                className="bi bi-play-circle-fill"
+                                style={{
+                                  fontSize: "3rem",
+                                  color: "white",
+                                  marginBottom:
+                                    item.titlePosition === "bottom"
+                                      ? "6rem"
+                                      : "2rem",
+                                }}
+                              ></i>
+                            </div>
+                          )}
                           <div className="card-body">
                             {item.titlePosition === "top" && (
                               <h5 className="card-title">{item.channelName}</h5>
                             )}
-                            <div className="d-flex">
-                              {item.slider}
-                              {Array.from(Array(item.partition).keys()).map(
-                                (e, i) => {
-                                  return (
-                                    <img
-                                      key={i}
-                                      src="https://images.unsplash.com/photo-1564754943164-e83c08469116?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8dmVydGljYWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-                                      className="d-block"
-                                      style={{
-                                        height: `${34 / item.partition}rem`,
-                                        marginRight: "1px",
-                                      }}
-                                    />
-                                  );
-                                }
-                              )}
-                            </div>
-                            {item.titlePosition === "bottom" && (
-                              <h5 className="card-title">{item.channelName}</h5>
-                            )}
-                            <p className="card-text">
-                              {showDesc.indexOf(item._id) !== -1
-                                ? item.description + " "
-                                : item.description.length < 35
-                                ? item.description
-                                : item.description.slice(0, 35) + "..."}
-                              {item.description.length > 35 && (
-                                <button
-                                  className="show-more"
-                                  onClick={() => showAndHideBtn(item._id)}
-                                >
-                                  {" "}
-                                  {showDesc.indexOf(item._id) !== -1
-                                    ? "Hide"
-                                    : "Show More"}
-                                </button>
-                              )}
-                            </p>
-                            <button
-                              onClick={() => confirmBox(item._id)}
-                              className="btn btn-danger mx-1"
-                            >
-                              Delete
-                            </button>
-                            <button
-                              onClick={() => handleEditChannel(item._id)}
-                              className="btn btn-dark mx-1"
-                            >
-                              Edit
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                {item.layout === "square" && item.type === "fixed" && (
-                  <div className="row mx-1 my-1" style={{ width: "28rem" }}>
-                    <div className="">
-                      <div className="card text-center">
-                        {item.play === "true" && (
-                          <div className="card-img-overlay d-flex justify-content-center align-items-center">
-                            <i
-                              className="bi bi-play-circle-fill"
-                              style={{
-                                fontSize: "3rem",
-                                color: "white",
-                                marginBottom:
-                                  item.titlePosition === "bottom"
-                                    ? "6rem"
-                                    : "2rem",
-                              }}
-                            ></i>
-                          </div>
-                        )}
-                        <div className="card-body">
-                          {item.titlePosition === "top" && (
-                            <h5 className="card-title">{item.channelName}</h5>
-                          )}
-                          <img
-                            src="https://images.unsplash.com/photo-1621342261924-3e2f6c9603f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c3F1YXJlJTIwaW1hZ2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-                            className="card-img-top"
-                            alt="..."
-                          />
-                          {item.titlePosition === "bottom" && (
-                            <h5 className="card-title">{item.channelName}</h5>
-                          )}
-                          <p className="card-text">
-                            {showDesc.indexOf(item._id) !== -1
-                              ? item.description + " "
-                              : item.description.length < 35
-                              ? item.description
-                              : item.description.slice(0, 35) + "..."}
-                            {item.description.length > 35 && (
-                              <button
-                                className="show-more"
-                                onClick={() => showAndHideBtn(item._id)}
-                              >
-                                {" "}
-                                {showDesc.indexOf(item._id) !== -1
-                                  ? "Hide"
-                                  : "Show More"}
-                              </button>
-                            )}
-                          </p>
-                          <button
-                            onClick={() => handleDeleteChannel(item._id)}
-                            className="btn btn-danger mx-1"
-                          >
-                            Delete
-                          </button>
-                          <button
-                            onClick={() => handleEditChannel(item._id)}
-                            className="btn btn-dark mx-1"
-                          >
-                            Edit
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                {item.layout === "square" && item.type === "slider" && (
-                  <div className="container mt-3">
-                    <div className="row">
-                      <div className="col-12">
-                        <div
-                          className="card text-center"
-                          style={{ width: "28rem" }}
-                        >
-                          <div className="card-body">
-                            {item.titlePosition === "top" && (
-                              <h5 className="card-title">{item.channelName}</h5>
-                            )}
-                            <div className="d-flex">
-                              {Array.from(Array(item.partition).keys()).map(
-                                (e, i) => {
-                                  return (
-                                    <img
-                                      key={i}
-                                      src="https://images.unsplash.com/photo-1633467067670-30701ff2dcbd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHNxdWFyZSUyMGltYWdlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                                      className="d-block"
-                                      style={{
-                                        height: `${26 / item.partition}rem`,
-                                        marginRight: "1px",
-                                      }}
-                                    />
-                                  );
-                                }
-                              )}
-                            </div>
+                            <img
+                              src="https://images.unsplash.com/photo-1621342261924-3e2f6c9603f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c3F1YXJlJTIwaW1hZ2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+                              className="card-img-top"
+                              alt="..."
+                            />
                             {item.titlePosition === "bottom" && (
                               <h5 className="card-title">{item.channelName}</h5>
                             )}
@@ -1047,10 +1003,84 @@ const Channel = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                  {item.layout === "square" && item.type === "slider" && (
+                    <div className="container mt-3">
+                      <div className="row">
+                        <div className="col-12">
+                          <div
+                            className="card text-center"
+                            style={{ width: "28rem" }}
+                          >
+                            <div className="card-body">
+                              {item.titlePosition === "top" && (
+                                <h5 className="card-title">
+                                  {item.channelName}
+                                </h5>
+                              )}
+                              <div className="d-flex">
+                                {Array.from(Array(item.partition).keys()).map(
+                                  (e, i) => {
+                                    return (
+                                      <img
+                                        key={i}
+                                        src="https://images.unsplash.com/photo-1633467067670-30701ff2dcbd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHNxdWFyZSUyMGltYWdlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                                        className="d-block"
+                                        style={{
+                                          height: `${26 / item.partition}rem`,
+                                          marginRight: "1px",
+                                        }}
+                                      />
+                                    );
+                                  }
+                                )}
+                              </div>
+                              {item.titlePosition === "bottom" && (
+                                <h5 className="card-title">
+                                  {item.channelName}
+                                </h5>
+                              )}
+                              <p className="card-text">
+                                {showDesc.indexOf(item._id) !== -1
+                                  ? item.description + " "
+                                  : item.description.length < 35
+                                  ? item.description
+                                  : item.description.slice(0, 35) + "..."}
+                                {item.description.length > 35 && (
+                                  <button
+                                    className="show-more"
+                                    onClick={() => showAndHideBtn(item._id)}
+                                  >
+                                    {" "}
+                                    {showDesc.indexOf(item._id) !== -1
+                                      ? "Hide"
+                                      : "Show More"}
+                                  </button>
+                                )}
+                              </p>
+                              <button
+                                onClick={() => handleDeleteChannel(item._id)}
+                                className="btn btn-danger mx-1"
+                              >
+                                Delete
+                              </button>
+                              <button
+                                onClick={() => handleEditChannel(item._id)}
+                                className="btn btn-dark mx-1"
+                              >
+                                Edit
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))
+            ) : (
+              <h5 className="text-center">No Channel Found</h5>
+            )}
           </div>
         </div>
       )}

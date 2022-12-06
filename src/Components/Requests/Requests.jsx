@@ -1,44 +1,60 @@
 import React, { useContext, useEffect, useState } from "react";
 import Axios from "../Axios/Axios";
-import { AuthContext } from "../../App";
 import { motion } from "framer-motion";
+import { confirmAlert } from "react-confirm-alert";
+import { Metronome } from "@uiball/loaders";
 
 const Requests = () => {
-  const { userData } = useContext(AuthContext);
   const [NewsList, setNewsList] = useState([]);
+  const [loader, setLoader] = useState(true);
+  useEffect(() => {
+    showRequests();
+  }, []);
   const showRequests = async () => {
     const res = await Axios.post("/refreshtoken", {
       token: JSON.parse(localStorage.getItem("refreshToken")),
     });
     setNewsList(res.data.user.requests);
+    setLoader(false);
   };
-  useEffect(() => {
-    showRequests();
-  }, []);
   const approved = async (item) => {
-    if (window.confirm("Are you sure you want approve this news?")) {
-      const config = {
-        headers: {
-          token: JSON.parse(localStorage.getItem("accessToken")),
-        },
-      };
-      await Axios.post(`/approve-news/${item._id}`, {}, config);
-      showRequests();
-    }
+    const config = {
+      headers: {
+        token: JSON.parse(localStorage.getItem("accessToken")),
+      },
+    };
+    console.log(item);
+    await Axios.post(`/approve-news/${item._id}`, {}, config);
+    showRequests();
   };
   const notApproved = async (item) => {
-    if (window.confirm("Are you sure you want to Remove this news?")) {
-      const config = {
-        headers: {
-          token: JSON.parse(localStorage.getItem("accessToken")),
+    const config = {
+      headers: {
+        token: JSON.parse(localStorage.getItem("accessToken")),
+      },
+    };
+    await Axios.delete(`/news/${item._id}`, config);
+    showRequests();
+  };
+  const confirmBox = (item, approve) => {
+    confirmAlert({
+      title: `Confirm to ${approve === "approved" ? "Approve" : "Remove"}`,
+      message: `Are you sure to ${
+        approve === "approved"
+          ? "Approve this News "
+          : "Remove this News permanently"
+      } this news?`,
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () =>
+            approve === "approved" ? approved(item) : notApproved(item),
         },
-      };
-      await Axios.delete(`/news`, {
-        data: { newsId: item._id, folderId: item.folderId },
-        headers: config.headers,
-      });
-      showRequests();
-    }
+        {
+          label: "No",
+        },
+      ],
+    });
   };
   return (
     <motion.div
@@ -57,69 +73,92 @@ const Requests = () => {
                 <div className="row">
                   <div className="col-12">
                     <div className="table-responsive">
-                      <table className="table table-striped" id="table-1">
-                        <thead>
-                          <tr>
-                            <th className="text-center">Image</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            {/* <th>Category</th> */}
-                            <th>Channel</th>
-                            <th>Author</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {NewsList.length > 0 &&
-                            NewsList.map((item, index) => (
-                              <tr key={item._id}>
-                                <td className="align-middle text-center">
-                                  <img
-                                    alt="image"
-                                    src={item.file}
-                                    width={145}
-                                    data-toggle="title"
-                                  />
-                                </td>
-                                <td className="align-middle">{item.title}</td>
-                                <td className="align-middle">
-                                  {item.description}
-                                </td>
-                                {/* <td className="align-middle">
-                                  {item.category}
-                                </td> */}
-                                <td className="align-middle">
-                                  {item.channels.map((e, i) => (
-                                    <div key={i}>
-                                      {e.channelName} <br />
-                                    </div>
-                                  ))}
-                                </td>
-                                <td className="align-middle">
-                                  {item.author.username}
-                                </td>
-                                <td className="align-middle">
-                                  {item.createdAt.toString().slice(0, 10)}
-                                </td>
-                                <td className="align-middle">
-                                  <button
-                                    onClick={() => approved(item)}
-                                    className="btn btn-success"
-                                  >
-                                    <i className="bi bi-check" />
-                                  </button>
-                                  <button
-                                    onClick={() => notApproved(item)}
-                                    className="btn btn-danger"
-                                  >
-                                    <i className="bi bi-x" />
-                                  </button>
+                      {loader ? (
+                        <div
+                          className="loader"
+                          style={{
+                            width: "100%",
+                            height: "80vh",
+                          }}
+                        >
+                          <Metronome
+                            size={60}
+                            lineWeight={5}
+                            speed={2}
+                            color="black"
+                          />
+                          <p>Loading...</p>
+                        </div>
+                      ) : (
+                        <table className="table table-striped" id="table-1">
+                          <thead>
+                            <tr>
+                              <th className="text-center">Image</th>
+                              <th>Title</th>
+                              <th>Description</th>
+                              <th>Location</th>
+                              <th>Author</th>
+                              <th>Date</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {NewsList.length > 0 ? (
+                              NewsList.map((item, index) => (
+                                <tr key={item._id}>
+                                  <td className="align-middle text-center">
+                                    <img
+                                      alt="image"
+                                      src={`data:image/jpeg;base64,${item.file}`}
+                                      width={145}
+                                      data-toggle="title"
+                                    />
+                                  </td>
+                                  <td className="align-middle">
+                                    {item.metaTitle}
+                                  </td>
+                                  <td className="align-middle">
+                                    {item.shortDescription}
+                                  </td>
+                                  <td className="align-middle">
+                                    {item.location}
+                                  </td>
+                                  <td className="align-middle">
+                                    {item.author.username}
+                                  </td>
+                                  <td className="align-middle col-2">
+                                    {item.createdAt.toString().slice(0, 10)}
+                                  </td>
+                                  <td className="align-middle">
+                                    <button
+                                      onClick={() =>
+                                        confirmBox(item, "approved")
+                                      }
+                                      className="btn btn-success"
+                                    >
+                                      <i className="bi bi-check" />
+                                    </button>
+                                    <button
+                                      onClick={() =>
+                                        confirmBox(item, "notApproved")
+                                      }
+                                      className="btn btn-danger"
+                                    >
+                                      <i className="bi bi-x" />
+                                    </button>
+                                  </td>
+                                </tr>
+                              ))
+                            ) : (
+                              <tr>
+                                <td colSpan="7" className="text-center">
+                                  No Requests
                                 </td>
                               </tr>
-                            ))}
-                        </tbody>
-                      </table>
+                            )}
+                          </tbody>
+                        </table>
+                      )}
                     </div>
                   </div>
                 </div>

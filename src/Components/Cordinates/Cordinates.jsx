@@ -3,8 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Axios from "../Axios/Axios";
 import { confirmAlert } from "react-confirm-alert";
+import { Metronome } from "@uiball/loaders";
 const Cordinates = () => {
   const navigate = useNavigate();
+  const [loader, setLoader] = useState(true);
   const [CordinatesList, setCordinatesList] = useState([]);
   useEffect(() => {
     getCordinates();
@@ -16,7 +18,7 @@ const Cordinates = () => {
       },
     };
     const { data } = await Axios.get("/ePaperCoord", config);
-    console.log(data.ewspaper);
+    setLoader(false);
     setCordinatesList(data.ewspaper);
   };
   const deleteCordinates = async (file) => {
@@ -73,70 +75,88 @@ const Cordinates = () => {
                       height: "72vh",
                     }}
                   >
-                    <table className="table table-striped" id="table-1">
-                      <thead>
-                        <tr>
-                          <th>S NO.</th>
-                          <th className="text-center">Image</th>
-                          <th>City</th>
-                          <th>Link</th>
-                          <th>Page No.</th>
-                          <th>Left</th>
-                          <th>Top</th>
-                          <th>Date</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {CordinatesList.length > 0 ? (
-                          CordinatesList.map((item, index) => (
-                            <tr key={index}>
-                              <td className="align-middle">{index + 1}</td>
-                              <td className="align-middle text-center">
-                                <img
-                                  alt="image"
-                                  src={`data:image/jpeg;base64,${item.image}`}
-                                  width={145}
-                                  data-toggle="title"
-                                />
-                              </td>
-                              <td className="align-middle">{item.city}</td>
-                              <td className="align-middle">{item.newsUrl}</td>
-                              <td className="align-middle">{item.pageNo}</td>
-                              <td className="align-middle">
-                                {item.leftCoordinate}
-                              </td>
-                              <td className="align-middle">
-                                {item.topCoordinate}
-                              </td>
-                              <td className="align-middle">{item.date}</td>
-                              <td className="align-middle">
-                                <button
-                                  onClick={() =>
-                                    navigate(`/cordinates/${item._id}`)
-                                  }
-                                  className="btn btn-success"
-                                >
-                                  <i className="bi bi-pencil-square"></i>
-                                </button>
-                                <button
-                                  onClick={() => confirmBox(item)}
-                                  className="btn btn-danger"
-                                >
-                                  <i className="bi bi-trash3"></i>
-                                </button>
+                    {loader ? (
+                      <div
+                        className="loader"
+                        style={{
+                          width: "100%",
+                          height: "70vh",
+                        }}
+                      >
+                        <Metronome
+                          size={60}
+                          lineWeight={5}
+                          speed={2}
+                          color="black"
+                        />
+                        <p>Loading...</p>
+                      </div>
+                    ) : (
+                      <table className="table table-striped" id="table-1">
+                        <thead>
+                          <tr>
+                            <th>S NO.</th>
+                            <th className="text-center">Image</th>
+                            <th>City</th>
+                            <th>Link</th>
+                            <th>Page No.</th>
+                            <th>Left</th>
+                            <th>Top</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {CordinatesList.length > 0 ? (
+                            CordinatesList.map((item, index) => (
+                              <tr key={index}>
+                                <td className="align-middle">{index + 1}</td>
+                                <td className="align-middle text-center">
+                                  <img
+                                    alt="image"
+                                    src={`data:image/jpeg;base64,${item.image}`}
+                                    width={145}
+                                    data-toggle="title"
+                                  />
+                                </td>
+                                <td className="align-middle">{item.city}</td>
+                                <td className="align-middle">{item.newsUrl}</td>
+                                <td className="align-middle">{item.pageNo}</td>
+                                <td className="align-middle">
+                                  {item.leftCoordinate}
+                                </td>
+                                <td className="align-middle">
+                                  {item.topCoordinate}
+                                </td>
+                                <td className="align-middle">{item.date}</td>
+                                <td className="align-middle">
+                                  <button
+                                    onClick={() =>
+                                      navigate(`/cordinates/${item._id}`)
+                                    }
+                                    className="btn btn-success"
+                                  >
+                                    <i className="bi bi-pencil-square"></i>
+                                  </button>
+                                  <button
+                                    onClick={() => confirmBox(item)}
+                                    className="btn btn-danger"
+                                  >
+                                    <i className="bi bi-trash3"></i>
+                                  </button>
+                                </td>
+                              </tr>
+                            ))
+                          ) : (
+                            <tr>
+                              <td colSpan="9" className="text-center">
+                                No Data Found
                               </td>
                             </tr>
-                          ))
-                        ) : (
-                          <tr>
-                            <td colSpan="9" className="text-center">
-                              No Data Found
-                            </td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
+                          )}
+                        </tbody>
+                      </table>
+                    )}
                   </div>
                 </div>
               </div>

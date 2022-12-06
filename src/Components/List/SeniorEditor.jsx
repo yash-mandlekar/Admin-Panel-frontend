@@ -5,7 +5,10 @@ import ListComp from "./ListComp";
 
 const SeniorEditor = () => {
   const [List, setList] = useState([]);
-
+  const [loader, setLoader] = useState(true);
+  useEffect(() => {
+    GetSeniorEditor();
+  }, []);
   const GetSeniorEditor = async () => {
     const config = {
       headers: {
@@ -14,10 +17,8 @@ const SeniorEditor = () => {
     };
     const response = await Axios.get("/senior-editor", config);
     setList(response.data.data);
+    setLoader(false);
   };
-  useEffect(() => {
-    GetSeniorEditor();
-  }, []); 
 
   const confirmBox = (item, block) => {
     confirmAlert({
@@ -45,7 +46,14 @@ const SeniorEditor = () => {
     const response = await Axios.post("/block-user", { user2: id }, config);
     GetSeniorEditor();
   };
-  return <ListComp List={List} confirmBox={confirmBox} role="Senior Editors" />;
+  return (
+    <ListComp
+      List={List}
+      loader={loader}
+      confirmBox={confirmBox}
+      role="Senior Editors"
+    />
+  );
 };
 
 export default SeniorEditor;

@@ -3,9 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Axios from "../Axios/Axios";
 import { confirmAlert } from "react-confirm-alert";
+import Style from "../News/News.module.css";
+import moment from "moment";
+import { Metronome } from "@uiball/loaders";
+
 const EPaper = () => {
   const navigate = useNavigate();
   const [EPaperList, setEPaperList] = useState([]);
+  const [loader, setLoader] = useState(true);
+  const [filter, setfilter] = useState({
+    city: "all",
+    date: moment().format("YYYY-MM-DD"),
+  });
+  const { city, date } = filter;
   useEffect(() => {
     getEPaper();
   }, []);
@@ -15,8 +25,9 @@ const EPaper = () => {
         token: JSON.parse(localStorage.getItem("accessToken")),
       },
     };
+    setLoader(true);
     const { data } = await Axios.get("/ePaper", config);
-    console.log(data);
+    setLoader(false);
     setEPaperList(data);
   };
   const deleteEPaper = async (file) => {
@@ -25,7 +36,7 @@ const EPaper = () => {
         token: JSON.parse(localStorage.getItem("accessToken")),
       },
     };
-    await Axios.delete(`/ePaper/${file}`, config);
+    await Axios.delete(`/ePaper/${file._id}`, config);
     getEPaper();
   };
   const confirmBox = (item) => {
@@ -43,6 +54,40 @@ const EPaper = () => {
       ],
     });
   };
+  const handleChange = async (e) => {
+    const { value } = e.target;
+    setfilter({ ...filter, city: value });
+    if (value === "all") {
+      getEPaper();
+      return;
+    }
+    setLoader(true);
+    const res = await Axios.get(`/ePaper/city/${value}`);
+    setLoader(false);
+    setEPaperList(res.data);
+  };
+  const handleDate = async (e) => {
+    const { value } = e.target;
+    setfilter({ ...filter, date: value });
+    setLoader(true);
+    if (city === "all") {
+      var res = await Axios.get("/ePaper");
+    } else {
+      var res = await Axios.get(`/ePaper/city/${city}`);
+    }
+    setLoader(false);
+    const filterDate = res.data.filter((item) => {
+      return moment(item.date).format("YYYY-MM-DD") === value;
+    });
+    setEPaperList(filterDate);
+  };
+  const removeFilter = () => {
+    setfilter({
+      city: "all",
+      date: moment().format("YYYY-MM-DD"),
+    });
+    getEPaper();
+  };
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -51,7 +96,7 @@ const EPaper = () => {
       className="container w-100"
     >
       <h1 className="display-6">E-Paper :- </h1>
-      <div className="showDropzone-container mt-2 mx-2">
+      <div className="showDropzone-container mt-2 mx-2 d-flex">
         <button
           onClick={() => navigate("/e-paper/new")}
           className="btn btn-dark mx-2"
@@ -59,66 +104,130 @@ const EPaper = () => {
           <i className="bi bi-plus-circle-dotted"> </i>
           Add E-Paper
         </button>
+        <button onClick={removeFilter} className="btn btn-danger mx-2">
+          <i className="bi bi-trash"> </i>
+          Remove Filter
+        </button>
+        {/* filter with city   */}
+        <div className={Style.inputGroup}>
+          <label className={Style.label} htmlFor="inputGroupSelect01">
+            Select City :
+          </label>
+          <select
+            onChange={handleChange}
+            name="city"
+            value={city}
+            className={`form-select ${Style.input}`}
+            style={{ width: "10vw" }}
+            id="inputGroupSelect01"
+          >
+            <option value="all">All City</option>
+            <option value="Bhopal">Bhopal</option>
+            <option value="Gwalior">Gwalior</option>
+            <option value="Raipur">Raipur</option>
+          </select>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <label className={Style.label} htmlFor="date">
+            Date:
+          </label>
+          <input
+            type="date"
+            name="date"
+            id="date"
+            value={date}
+            onChange={handleDate}
+            className={Style.input}
+            style={{ width: "12vw" }}
+            max={moment().format("YYYY-MM-DD")}
+            required
+          />
+        </div>
       </div>
-      <div className="d-flex flex-wrap showAllFile-container">
-        {EPaperList.map((file, index) => (
-          <div key={file._id}>
-            <div
-              className="card mt-1 mx-1"
-              style={{
-                width: "18rem",
-              }}
-            >
-              <img
-                src={`data:image/jpeg;base64,${file.image}`}
-                className="card-img-top"
-              />
-              <span
+      <div
+        className="d-flex flex-wrap showAllFile-container"
+        style={{ height: "76vh" }}
+      >
+        {loader ? (
+          <div
+            className="loader"
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <Metronome size={60} lineWeight={5} speed={2} color="black" />
+            <p>Loading...</p>
+          </div>
+        ) : EPaperList.length !== 0 ? (
+          EPaperList.map((file, index) => (
+            <div key={file._id}>
+              <div
+                className="card mt-1 mx-1"
                 style={{
-                  fontSize: "13px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  paddingRight: "10px",
+                  width: "18rem",
                 }}
               >
-                <strong
-                  style={{ color: "black", fontSize: "14px" }}
-                  className="px-2 py-1"
-                >
-                  City: {file.city}
-                </strong>
-                Page No : {file.pageNo}
-              </span>
-              <div className="card-body px-2 py-1">
-                <button
-                  onClick={() => navigate(file._id)}
-                  className="btn btn-success mx-1"
-                >
-                  Edit
-                </button>
-                {/* delete button */}
-                <button
-                  onClick={() => {
-                    confirmBox(file);
-                  }}
-                  className="btn btn-danger mx-1"
-                >
-                  Delete
-                </button>
-                <small
+                <img
+                  src={`data:image/jpeg;base64,${file.image}`}
+                  className="card-img-top"
+                />
+                <span
                   style={{
-                    // color: "grey",
                     fontSize: "13px",
-                    marginLeft: "24px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    paddingRight: "10px",
                   }}
                 >
-                  Date : {file.date}
-                </small>
+                  <strong
+                    style={{ color: "black", fontSize: "14px" }}
+                    className="px-2 py-1"
+                  >
+                    City: {file.city}
+                  </strong>
+                  Page No : {file.pageNo}
+                </span>
+                <div className="card-body px-2 py-1">
+                  <button
+                    onClick={() => navigate(file._id)}
+                    className="btn btn-success mx-1"
+                  >
+                    Edit
+                  </button>
+                  {/* delete button */}
+                  <button
+                    onClick={() => {
+                      confirmBox(file);
+                    }}
+                    className="btn btn-danger mx-1"
+                  >
+                    Delete
+                  </button>
+                  <small
+                    style={{
+                      // color: "grey",
+                      fontSize: "13px",
+                      marginLeft: "24px",
+                    }}
+                  >
+                    Date : {file.date}
+                  </small>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="container mt-2">
+            <div className="row">
+              <div className="col-12">
+                <div className="alert alert-danger" role="alert">
+                  No Data Found
+                </div>
               </div>
             </div>
           </div>
-        ))}
+        )}
       </div>
     </motion.div>
   );

@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import Axios from "../Axios/Axios";
-import { AuthContext } from "../../App";
 import EditCategory from "./EditCategory";
 import Alert from "../Alert/Alert";
 import { confirmAlert } from "react-confirm-alert";
 import { motion } from "framer-motion";
+import { Metronome } from "@uiball/loaders";
 
 const Categories = () => {
-  const { userData } = useContext(AuthContext);
   const [ShowForm, setShowForm] = useState(false);
+  const [loader, setloader] = useState(true);
   const [UpdateForm, setUpdateForm] = useState(false);
   const [categories, setcategories] = useState([]);
   const [alert, setalert] = useState({
@@ -42,6 +42,7 @@ const Categories = () => {
       },
     };
     const res = await Axios.get("/category", config);
+    setloader(false);
     setcategories(res.data);
   };
   const handleAdd = (e) => {
@@ -198,71 +199,96 @@ const Categories = () => {
                   <div className="row">
                     <div className="col-12">
                       <div className="table-responsive">
-                        <table className="table table-striped" id="table-1">
-                          <thead>
-                            <tr>
-                              <th className="text-center">S.No</th>
-                              <th className="text-center">Category</th>
-                              <th className="text-center">Parent</th>
-                              <th className="text-center">Category Url</th>
-                              <th className="text-center">Sort Order</th>
-                              <th className="text-center">Show In Child</th>
-                              <th className="text-center">Menu</th>
-                              <th className="text-center">Meta Title</th>
-                              <th className="text-center">Meta Desc.</th>
-                              <th className="text-center">Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {categories.length > 0 &&
-                              categories.map((item, index) => (
-                                <tr key={index}>
-                                  <td className="align-middle text-center text-break">
-                                    {index + 1}
-                                  </td>
-                                  <td className="align-middle text-center text-break">
-                                    {item.englishName}
-                                  </td>
-                                  <td className="align-middle text-center text-break">
-                                    {item.parentCategory &&
-                                      item.parentCategory.englishName}
-                                  </td>
-                                  <td className="align-middle text-center text-break">
-                                    {item.categoryUrl}
-                                  </td>
-                                  <td className="align-middle text-center text-break">
-                                    {item.sortOrder}
-                                  </td>
-                                  <td className="align-middle text-center text-break">
-                                    {item.showInChild}
-                                  </td>
-                                  <td className="align-middle text-center text-break">
-                                    {item.showInMenu}
-                                  </td>
-                                  <td className="align-middle text-center text-break">
-                                    {item.metaTitle}
-                                  </td>
-                                  <td className="align-middle text-center text-break">
-                                    {item.metaDescription}
-                                  </td>
-                                  <td className="align-middle text-center text-break">
-                                    <button
-                                      onClick={() => handleEdit(item)}
-                                      className="btn btn-success"
-                                    >
-                                      <i className="bi bi-pencil-square" />
-                                    </button>
-                                    <button
-                                      onClick={() => confirmBox(item)}
-                                      className="btn btn-danger"
-                                    >
-                                      <i className="bi bi-trash" />
-                                    </button>
+                        {loader ? (
+                          <div
+                            className="loader"
+                            style={{
+                              width: "100%",
+                              height: "70vh",
+                            }}
+                          >
+                            <Metronome
+                              size={60}
+                              lineWeight={5}
+                              speed={2}
+                              color="black"
+                            />
+                            <p>Loading...</p>
+                          </div>
+                        ) : (
+                          <table className="table table-striped" id="table-1">
+                            <thead>
+                              <tr>
+                                <th className="text-center">S.No</th>
+                                <th className="text-center">Category</th>
+                                <th className="text-center">Parent</th>
+                                <th className="text-center">Category Url</th>
+                                <th className="text-center">Sort Order</th>
+                                <th className="text-center">Show In Child</th>
+                                <th className="text-center">Menu</th>
+                                <th className="text-center">Meta Title</th>
+                                <th className="text-center">Meta Desc.</th>
+                                <th className="text-center">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {categories.length > 0 ? (
+                                categories.map((item, index) => (
+                                  <tr key={index}>
+                                    <td className="align-middle text-center text-break">
+                                      {index + 1}
+                                    </td>
+                                    <td className="align-middle text-center text-break">
+                                      {item.englishName}
+                                    </td>
+                                    <td className="align-middle text-center text-break">
+                                      {item.parentCategory &&
+                                        item.parentCategory.englishName}
+                                    </td>
+                                    <td className="align-middle text-center text-break">
+                                      {item.categoryUrl}
+                                    </td>
+                                    <td className="align-middle text-center text-break">
+                                      {item.sortOrder}
+                                    </td>
+                                    <td className="align-middle text-center text-break">
+                                      {item.showInChild}
+                                    </td>
+                                    <td className="align-middle text-center text-break">
+                                      {item.showInMenu}
+                                    </td>
+                                    <td className="align-middle text-center text-break">
+                                      {item.metaTitle}
+                                    </td>
+                                    <td className="align-middle text-center text-break">
+                                      {item.metaDescription}
+                                    </td>
+                                    <td className="align-middle text-center text-break">
+                                      <button
+                                        onClick={() => handleEdit(item)}
+                                        className="btn btn-success"
+                                      >
+                                        <i className="bi bi-pencil-square" />
+                                      </button>
+                                      <button
+                                        onClick={() => confirmBox(item)}
+                                        className="btn btn-danger"
+                                      >
+                                        <i className="bi bi-trash" />
+                                      </button>
+                                    </td>
+                                  </tr>
+                                ))
+                              ) : (
+                                <tr>
+                                  <td colSpan="10" className="text-center">
+                                    No Data Found
                                   </td>
                                 </tr>
-                              ))}
-                          </tbody>
-                        </table>
+                              )}
+                            </tbody>
+                          </table>
+                        )}
                       </div>
                     </div>
                   </div>

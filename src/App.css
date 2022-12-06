@@ -1015,9 +1015,9 @@ a[aria-expanded="true"] .white-arrow {
   animation: animate 5s linear infinite;
 }
 .img-cnt2 {
-  width: 150px;
+  height: 210px;
   overflow: hidden;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   display: flex;
   object-fit: cover;
@@ -1025,6 +1025,11 @@ a[aria-expanded="true"] .white-arrow {
 .input-group-text {
   width: 145px;
 }
+.img-fluidd {
+  height: 100%;
+  border-radius: 10px;
+}
+
 .alert-animate {
   position: absolute !important;
   left: 50%;
@@ -1088,7 +1093,10 @@ a[aria-expanded="true"] .white-arrow {
 .col-sm-3 h6 {
   font-size: 1.2vmax;
 }
-.ck-editor__main div{
+.ck-editor__main div {
   height: 30vw;
   width: 54vw;
+}
+.react-confirm-alert-body {
+  min-width: 30vw !important;
 }

@@ -396,10 +396,20 @@ const Profile = () => {
     };
     Axios.post("/profile/pic", formData, config)
       .then((res) => {
-        alert("Profile Picture Updated");
+        setalert({
+          show: true,
+          message: "Profile Picture Updated",
+        });
+        setTimeout(() => {
+          setalert({
+            show: false,
+            message: "",
+          });
+        }, 2000);
         setUserDatas(res.data.user);
       })
       .catch((err) => {
+        console.log(err);
         setalert({
           show: true,
           message: "Something went wrong",
