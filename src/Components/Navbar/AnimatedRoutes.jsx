@@ -8,7 +8,7 @@ import AppUser from "../Profile/AppUser";
 import FolderManage from "../FolderManage/FolderManage";
 import VideoData from "../FolderManage/SingleFolder";
 import SeniorEditor from "../List/SeniorEditor";
-import Users from "../List/Users";
+import Users from "../Users/Users";
 import Editor from "../List/Editor";
 import Repoter from "../List/Repoter";
 import { AnimatePresence } from "framer-motion";

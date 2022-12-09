@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
+import React, { useEffect, useRef } from "react";
+import videojs from "video.js";
+import "video.js/dist/video-js.css";
 
 export const ReactPlayer = (props) => {
   const videoRef = useRef(null);
@@ -11,10 +11,10 @@ export const ReactPlayer = (props) => {
     if (!playerRef.current) {
       const videoElement = videoRef.current;
       if (!videoElement) return;
-      const player = playerRef.current = videojs(videoElement, options, () => {
+      const player = (playerRef.current = videojs(videoElement, options, () => {
         // videojs.log('player is ready');
         onReady && onReady(player);
-      });
+      }));
     } else {
       playerRef.current.src(options.sources);
     }
@@ -33,13 +33,14 @@ export const ReactPlayer = (props) => {
 
   return (
     <div data-vjs-player>
+      {/* small play icon */}
       <video
         ref={videoRef}
-        className='video-js vjs-big-play-centered'
+        className="video-js vjs-big-play-centered"
         controls
       />
     </div>
   );
-}
+};
 
 export default ReactPlayer;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactPlayer from "./ReactPlayer";
 import Cropper from "react-easy-crop";
 
@@ -36,7 +36,10 @@ const DropZone = ({
   return (
     <div className="container d-flex mt-2 file-folder-cnt">
       {/* Progress Bar */}
-      <div className="container">
+      <form
+        className="container"
+        onSubmit={EditForm ? updateForm : handleDropzoneSubmit}
+      >
         <button
           onClick={() => setshowDropzone(false)}
           className="btn btn-danger mx-2"
@@ -56,14 +59,18 @@ const DropZone = ({
             {progress}%
           </div>
         </div>
-        <div
-          {...getRootProps({
-            className: `dropzone mb-2 ${blobUrl ? "w-100" : "w-50"}`,
-          })}
-        >
-          <input {...getInputProps()} />
-          <p>Drag 'n' drop some files here, or click to select files</p>
-        </div>
+        {isUpdate ? (
+          ""
+        ) : (
+          <div
+            {...getRootProps({
+              className: `dropzone mb-2 ${blobUrl ? "w-100" : "w-50"}`,
+            })}
+          >
+            <input {...getInputProps()} />
+            <p>Drag 'n' drop some files here, or click to select files</p>
+          </div>
+        )}
         <div className={`input-group mb-3 ${blobUrl ? "w-100" : "w-50"}`}>
           <input
             type="text"
@@ -138,7 +145,7 @@ const DropZone = ({
           </label>
           <select
             onChange={handleInput}
-            value={category}
+            // value={category}
             name="category"
             className="form-select"
             id="inputGroupSelect01"
@@ -151,13 +158,10 @@ const DropZone = ({
             ))}
           </select>
         </div>
-        <button
-          onClick={EditForm ? updateForm : handleDropzoneSubmit}
-          className="btn btn-dark mt-2"
-        >
+        <button type="submit" className="btn btn-dark mt-2">
           Submit File
         </button>
-      </div>
+      </form>
       {blobUrl && (
         <aside className="container">
           <h4>Preview :-</h4>
@@ -201,20 +205,6 @@ const DropZone = ({
                   onZoomChange={setZoom}
                 />
               </div>
-              {/* <div className="controls">
-                        <input
-                            type="range"
-                            value={zoom}
-                            min={1}
-                            max={3}
-                            step={0.1}
-                            aria-labelledby="Zoom"
-                            onChange={(e) => {
-                                setZoom(e.target.value)
-                            }}
-                            className="zoom-range"
-                        />
-                    </div> */}
             </div>
           )}
           {acceptedFiles.map((file, i) => (

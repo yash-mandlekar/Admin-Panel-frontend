@@ -9,6 +9,7 @@ const AddNews = () => {
   const [Categories, setCategories] = useState([]);
   const [Focused, setFocused] = useState(false);
   const [btnloader, setBtnloader] = useState(false);
+  const [catloader, setCatloader] = useState(true);
   const [NewsForm, setNewsForm] = useState({
     categoryInp: "",
     category: [],
@@ -53,17 +54,47 @@ const AddNews = () => {
     getCategories();
   }, []);
   const getCategories = async () => {
+    setCatloader(true);
     const config = {
       headers: {
         token: JSON.parse(localStorage.getItem("accessToken")),
       },
     };
     const { data } = await Axios.get("/news-category", config);
+    setCatloader(false);
     setCategories(data);
   };
   const handleSubmit = async (e) => {
-    setBtnloader(true);
     e.preventDefault();
+    if (
+      !showInSlider ||
+      !sliderPriority ||
+      !publishDateTime ||
+      !latestNews ||
+      !latestNewsPriority ||
+      !e.target.file.files[0] ||
+      !aboutImage ||
+      !location ||
+      !imageSource ||
+      !metaTitle ||
+      !metaDescription ||
+      !hashTags ||
+      !shortDescription ||
+      !description
+    ) {
+      setalert({
+        show: true,
+        message: "Please fill all the fields",
+      });
+      setTimeout(() => {
+        setalert({
+          show: false,
+          message: "",
+        });
+      }, 3000);
+      return;
+    }
+    setBtnloader(true);
     const config = {
       headers: {
         token: JSON.parse(localStorage.getItem("accessToken")),
@@ -106,6 +137,7 @@ const AddNews = () => {
         show: true,
         message: err.response.data.message,
       });
+      setBtnloader(false);
       setTimeout(() => {
         setalert({
           show: false,
@@ -155,27 +187,34 @@ const AddNews = () => {
               />
               <i style={{ marginLeft: "-2rem" }} className="bi bi-search"></i>
               {/* search box */}
-              <div
-                className={Style.searchBox}
-                style={{ border: Focused && "0.1em solid rgb(114, 114, 114)" }}
-              >
-                {Focused &&
-                  Categories.filter(function (data) {
-                    return data.englishName
-                      .toLowerCase()
-                      .includes(categoryInp.toLowerCase());
-                  })
-                    .splice(0, 5)
-                    .map((item) => (
-                      <div
-                        onClick={() => handleSearch(item)}
-                        className={Style.searchItem}
-                        key={item._id}
-                      >
-                        {item.englishName}
-                      </div>
-                    ))}
-              </div>
+              {Focused && (
+                <div
+                  className={Style.searchBox}
+                  style={{
+                    border: Focused && "0.1em solid rgb(114, 114, 114)",
+                  }}
+                >
+                  {catloader ? (
+                    <div className={Style.searchItem}>Loading...</div>
+                  ) : (
+                    Categories.filter(function (data) {
+                      return data.englishName
+                        .toLowerCase()
+                        .includes(categoryInp.toLowerCase());
+                    })
+                      .splice(0, 5)
+                      .map((item) => (
+                        <div
+                          onClick={() => handleSearch(item)}
+                          className={Style.searchItem}
+                          key={item._id}
+                        >
+                          {item.englishName}
+                        </div>
+                      ))
+                  )}
+                </div>
+              )}
               {/* selected boxes */}
               <div className={Style.selectedBox}>
                 {category.map((item, i) => (

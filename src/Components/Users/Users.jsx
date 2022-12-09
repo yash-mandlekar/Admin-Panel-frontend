@@ -6,15 +6,14 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../App";
 import { Metronome } from "@uiball/loaders";
 
-const Repoter = () => {
+const Users = () => {
   const { userData } = useContext(AuthContext);
   const [loader, setLoader] = useState(true);
   const [List, setList] = useState([]);
   useEffect(() => {
-    GetRepoter();
+    GetUsers();
   }, []);
-
-  const GetRepoter = async () => {
+  const GetUsers = async () => {
     const config = {
       headers: {
         token: JSON.parse(localStorage.getItem("accessToken")),
@@ -23,6 +22,7 @@ const Repoter = () => {
     const response = await Axios.get("/users", config);
     setLoader(false);
     setList(response.data.appUsers);
+    console.log(response.data.appUsers);
   };
   const confirmBox = (item, block) => {
     confirmAlert({
@@ -46,7 +46,7 @@ const Repoter = () => {
       },
     };
     const response = await Axios.post("/block-user", { user2: id }, config);
-    GetRepoter();
+    GetUsers();
   };
 
   return (
@@ -62,7 +62,7 @@ const Repoter = () => {
         className="w-100 Senior-editor-cnt"
         style={{ backgroundColor: "#f3e9cb" }}
       >
-        <h1 className="display-6">Users : </h1>
+        <h1 className="display-6">Users : {List && List.length} </h1>
         <div className="container py-1">
           <div className="row d-flex h-100">
             {loader ? (
@@ -97,6 +97,7 @@ const Repoter = () => {
                         <i className="bi bi-info-circle"></i>
                       </div>
                     </Link>
+
                     <div className="card-body p-2">
                       <div className="d-flex text-black">
                         <div className="flex-shrink-0">
@@ -120,6 +121,12 @@ const Repoter = () => {
                             {item.businessAcc === "no"
                               ? "Normal Account"
                               : "Bussiness Account"}
+                            {item.isVerified && (
+                              <i
+                                style={{ color: "blue", marginLeft: "5px" }}
+                                className="bi bi-patch-check-fill"
+                              ></i>
+                            )}
                           </p>
                           <div
                             className="d-flex justify-content-between rounded-3 p-2 mb-2"
@@ -187,4 +194,4 @@ const Repoter = () => {
   );
 };
 
-export default Repoter;
+export default Users;

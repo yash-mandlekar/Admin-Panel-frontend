@@ -76,6 +76,7 @@ const AddNews = () => {
                 name="city"
                 className={`form-select ${Style.input}`}
                 id="inputGroupSelect01"
+                required
               >
                 <option>Select City</option>
                 <option value="Bhopal">Bhopal</option>

@@ -44,7 +44,6 @@ const EditNews = () => {
     shortDescription,
     description,
   } = NewsForm;
-  console.log(categories);
   const [alert, setalert] = useState({
     show: false,
     message: "",
@@ -138,7 +137,7 @@ const EditNews = () => {
   };
   return (
     <>
-      <h2 className={Style.h2}>Add News :- </h2>
+      <h2 className={Style.h2}>Edit News :- </h2>
       {alert.show && <Alert message={alert.message} />}
       <div className="showAllFile-container">
         <div className={Style.formCnt}>

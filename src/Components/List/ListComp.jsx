@@ -20,7 +20,9 @@ const ListComp = ({ List, confirmBox, role, loader }) => {
         className="w-100 Senior-editor-cnt"
         style={{ backgroundColor: "#f3e9cb" }}
       >
-        <h1 className="display-6">{role} : </h1>
+        <h1 className="display-6">
+          {role} : {List && List.length}
+        </h1>
         <div className="container py-1">
           <div className="row d-flex h-100">
             {loader ? (

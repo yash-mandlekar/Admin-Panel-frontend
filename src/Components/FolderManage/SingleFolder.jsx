@@ -86,177 +86,216 @@ const SingleFolder = () => {
       setfileType(acceptedFiles[0].type.split("/")[0]);
     },
   });
-  const handleDropzoneSubmit = useCallback(async () => {
-    if (blobUrl && fileType && title && channels.length > 0 && true) {
-      if (fileType === "image") {
-        var croppedImage = await getCroppedImg(blobUrl, croppedAreaPixels);
-        var file = await fetch(croppedImage)
-          .then((r) => r.blob())
-          .then(
-            (blobFile) =>
-              new File([blobFile], "croppedImage.png", { type: "image" })
-          );
-      } else if (fileType === "video") {
-        var croppedImage = blobUrl;
-        var file = await fetch(blobUrl)
-          .then((r) => r.blob())
-          .then(
-            (blobFile) => new File([blobFile], "video.mp4", { type: "video" })
-          );
-      } else {
-        var croppedImage = blobUrl;
-        var file = await fetch(blobUrl)
-          .then((r) => r.blob())
-          .then(
-            (blobFile) => new File([blobFile], "audio.mp3", { type: "audio" })
-          );
-      }
-      // file to formdata
-      setshowDropzone(false);
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("title", title);
-      formData.append("category", category);
-      formData.append("folderId", id);
-      formData.append("fileType", fileType);
-      channels.map((channel) => formData.append("channels[]", channel._id));
-
-      const res = await Axios.post(
-        "/shorts",
-        formData,
-        {
-          headers: {
-            token: JSON.parse(localStorage.getItem("accessToken")),
-            "Content-Type": "multipart/form-data",
-          },
-          onUploadProgress: (progressEvent) => {
-            setprogress(
-              parseInt(
-                Math.round((progressEvent.loaded * 100) / progressEvent.total)
-              )
+  const handleDropzoneSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      if (blobUrl && fileType && title && channels.length > 0 && true) {
+        if (fileType === "image") {
+          var croppedImage = await getCroppedImg(blobUrl, croppedAreaPixels);
+          var file = await fetch(croppedImage)
+            .then((r) => r.blob())
+            .then(
+              (blobFile) =>
+                new File([blobFile], "croppedImage.png", { type: "image" })
             );
-          },
-        },
-        []
-      );
-      console.log(res.data);
-      setFormDatas({
-        title: "",
-        _id: "",
-        channelInput: "",
-        category: "",
-        channels: [],
-      });
-      setblobUrl();
-      setfileType();
-      ShowFiles();
-      setprogress(0);
-    } else {
-      setalert({
-        show: true,
-        message: "Please fill all the fields",
-      });
-      setTimeout(() => {
-        setalert({
-          show: false,
-          message: "",
-        });
-      }, 3000);
-    }
-  }, [
-    croppedAreaPixels,
-    blobUrl,
-    fileType,
-    title,
-    id,
-    Files,
-    channels,
-    channelInput,
-  ]);
-  const updateForm = useCallback(async () => {
-    if (blobUrl && fileType && title && channels.length > 0 && true) {
-      if (fileType === "image") {
-        var croppedImage = await getCroppedImg(blobUrl, croppedAreaPixels);
-        var file = await fetch(croppedImage)
-          .then((r) => r.blob())
-          .then(
-            (blobFile) =>
-              new File([blobFile], "croppedImage.png", { type: "image" })
-          );
-      } else if (fileType === "video") {
-        var croppedImage = blobUrl;
-        var file = await fetch(blobUrl)
-          .then((r) => r.blob())
-          .then(
-            (blobFile) => new File([blobFile], "video.mp4", { type: "video" })
-          );
-      } else {
-        var croppedImage = blobUrl;
-        var file = await fetch(blobUrl)
-          .then((r) => r.blob())
-          .then(
-            (blobFile) => new File([blobFile], "audio.mp3", { type: "audio" })
-          );
-      }
-      // file to formdata
-      setshowDropzone(false);
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("title", title);
-      formData.append("folderId", id);
-      formData.append("fileType", fileType);
-      formData.append("newsId", _id);
-      channels.map((channel) => formData.append("channels[]", channel._id));
+        } else if (fileType === "video") {
+          var croppedImage = blobUrl;
+          var file = await fetch(blobUrl)
+            .then((r) => r.blob())
+            .then(
+              (blobFile) => new File([blobFile], "video.mp4", { type: "video" })
+            );
+        } else {
+          var croppedImage = blobUrl;
+          var file = await fetch(blobUrl)
+            .then((r) => r.blob())
+            .then(
+              (blobFile) => new File([blobFile], "audio.mp3", { type: "audio" })
+            );
+        }
+        console.log("category", category);
+        console.log("e.target.category", e.target.category.value);
 
-      const res = await Axios.put(
-        "/shorts",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            token: JSON.parse(localStorage.getItem("accessToken")),
-          },
-          onUploadProgress: (progressEvent) => {
-            setprogress(progressEvent.loaded / progressEvent.total);
-          },
-        },
-        []
-      );
-      setFormDatas({
-        title: "",
-        _id: "",
-        channelInput: "",
-        channels: [],
-      });
-      setblobUrl();
-      setfileType();
-      ShowFiles();
-      setprogress(0);
-    } else {
-      setalert({
-        show: true,
-        message: "Please fill all the fields",
-      });
-      setTimeout(() => {
+        // file to formdata
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("title", title);
+        formData.append("category", e.target.category.value);
+        formData.append("folderId", id);
+        formData.append("fileType", fileType);
+        channels.map((channel) => formData.append("channels[]", channel._id));
+
+        try {
+          await Axios.post(
+            "/shorts",
+            formData,
+            {
+              headers: {
+                token: JSON.parse(localStorage.getItem("accessToken")),
+                "Content-Type": "multipart/form-data",
+              },
+              onUploadProgress: (progressEvent) => {
+                setprogress(
+                  parseInt(
+                    Math.round(
+                      (progressEvent.loaded / progressEvent.total) * 100
+                    )
+                  )
+                );
+              },
+            },
+            []
+          );
+          setFormDatas({
+            title: "",
+            _id: "",
+            channelInput: "",
+            category: "",
+            channels: [],
+          });
+          setblobUrl();
+          setfileType();
+          ShowFiles();
+          setprogress(0);
+          setTimeout(() => {
+            setshowDropzone(false);
+          }, 1000);
+        } catch (error) {
+          setalert({
+            show: true,
+            message: error.response.data.message,
+          });
+          setTimeout(() => {
+            setalert({
+              show: false,
+              message: "",
+            });
+          }, 3000);
+        }
+      } else {
         setalert({
-          show: false,
-          message: "",
+          show: true,
+          message: "Please fill all the fields",
         });
-      }, 3000);
-    }
-  }, [
-    croppedAreaPixels,
-    blobUrl,
-    fileType,
-    title,
-    id,
-    Files,
-    channels,
-    channelInput,
-  ]);
+        setTimeout(() => {
+          setalert({
+            show: false,
+            message: "",
+          });
+        }, 3000);
+      }
+    },
+    [
+      croppedAreaPixels,
+      blobUrl,
+      fileType,
+      title,
+      id,
+      Files,
+      channels,
+      channelInput,
+    ]
+  );
+  const updateForm = useCallback(
+    async (e) => {
+      e.preventDefault();
+      if (blobUrl && fileType && title && channels.length > 0 && true) {
+        if (fileType === "image") {
+          var croppedImage = await getCroppedImg(blobUrl, croppedAreaPixels);
+          var file = await fetch(croppedImage)
+            .then((r) => r.blob())
+            .then(
+              (blobFile) =>
+                new File([blobFile], "croppedImage.png", { type: "image" })
+            );
+        } else if (fileType === "video") {
+          // var croppedImage = blobUrl;
+          // try {
+          //   var file = await fetch(blobUrl)
+          //     .then((r) => r.blob())
+          //     .then(
+          //       (blobFile) =>
+          //         new File([blobFile], "video.mp4", { type: "video" })
+          //     );
+          // } catch (error) {
+          //   console.log(error);
+          // }
+        } else {
+          var croppedImage = blobUrl;
+          var file = await fetch(blobUrl)
+            .then((r) => r.blob())
+            .then(
+              (blobFile) => new File([blobFile], "audio.mp3", { type: "audio" })
+            );
+        }
+        // file to formdata
+        setshowDropzone(false);
+        const formData = new FormData();
+        // formData.append("file", blobUrl);
+        formData.append("title", title);
+        formData.append("folderId", id);
+        formData.append("fileType", fileType);
+        channels.map((channel) => formData.append("channels[]", channel._id));
+
+        await Axios.put(
+          `/shorts/${_id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              token: JSON.parse(localStorage.getItem("accessToken")),
+            },
+            onUploadProgress: (progressEvent) => {
+              setprogress(progressEvent.loaded / progressEvent.total);
+            },
+          },
+          []
+        );
+        setFormDatas({
+          title: "",
+          _id: "",
+          channelInput: "",
+          channels: [],
+        });
+        setblobUrl();
+        setfileType();
+        ShowFiles();
+        setprogress(0);
+      } else {
+        setalert({
+          show: true,
+          message: "Please fill all the fields",
+        });
+        setTimeout(() => {
+          setalert({
+            show: false,
+            message: "",
+          });
+        }, 3000);
+      }
+    },
+    [
+      croppedAreaPixels,
+      blobUrl,
+      fileType,
+      title,
+      id,
+      Files,
+      channels,
+      channelInput,
+    ]
+  );
   const handleDropzone = () => {
     setshowDropzone(true);
     setIsUpdate(false);
+    setFormDatas({
+      title: "",
+      _id: "",
+      channelInput: "",
+      channels: [],
+    });
+    setblobUrl();
+    setfileType();
   };
   const handleInput = (e) => {
     setFormDatas({ ...FormDatas, [e.target.name]: e.target.value });
@@ -309,13 +348,13 @@ const SingleFolder = () => {
       },
     };
     const res = await Axios.get(`/shorts/${fileId}`, config);
-    console.log(res.data);
     setblobUrl(res.data.file);
     setfileType(res.data.fileType);
     setFormDatas({
       title: res.data.title,
       _id: res.data._id,
       channels: res.data.channels,
+      category: res.data.category,
       channelInput: "",
     });
     setshowDropzone(true);

@@ -13,7 +13,7 @@ const EPaper = () => {
   const [loader, setLoader] = useState(true);
   const [filter, setfilter] = useState({
     city: "all",
-    date: moment().format("YYYY-MM-DD"),
+    date: "",
   });
   const { city, date } = filter;
   useEffect(() => {
@@ -159,64 +159,86 @@ const EPaper = () => {
             <p>Loading...</p>
           </div>
         ) : EPaperList.length !== 0 ? (
-          EPaperList.map((file, index) => (
-            <div key={file._id}>
-              <div
-                className="card mt-1 mx-1"
-                style={{
-                  width: "18rem",
-                }}
-              >
-                <img
-                  src={`data:image/jpeg;base64,${file.image}`}
-                  className="card-img-top"
-                />
-                <span
+          EPaperList.reverse()
+            .sort(function (a, b) {
+              if (a.date < b.date) {
+                return 1;
+              }
+              if (a.date > b.date) {
+                return -1;
+              }
+              if (a.city < b.city) {
+                return -1;
+              }
+              if (a.city > b.city) {
+                return 1;
+              }
+              if (a.pageNo < b.pageNo) {
+                return -1;
+              }
+              if (a.pageNo > b.pageNo) {
+                return 1;
+              }
+              return 0;
+            })
+            .map((file, index) => (
+              <div key={file._id}>
+                <div
+                  className="card mt-1 mx-1"
                   style={{
-                    fontSize: "13px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    paddingRight: "10px",
+                    width: "18rem",
                   }}
                 >
-                  <strong
-                    style={{ color: "black", fontSize: "14px" }}
-                    className="px-2 py-1"
-                  >
-                    City: {file.city}
-                  </strong>
-                  Page No : {file.pageNo}
-                </span>
-                <div className="card-body px-2 py-1">
-                  <button
-                    onClick={() => navigate(file._id)}
-                    className="btn btn-success mx-1"
-                  >
-                    Edit
-                  </button>
-                  {/* delete button */}
-                  <button
-                    onClick={() => {
-                      confirmBox(file);
-                    }}
-                    className="btn btn-danger mx-1"
-                  >
-                    Delete
-                  </button>
-                  <small
+                  <img
+                    src={`data:image/jpeg;base64,${file.image}`}
+                    className="card-img-top"
+                  />
+                  <span
                     style={{
-                      // color: "grey",
                       fontSize: "13px",
-                      marginLeft: "24px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      paddingRight: "10px",
                     }}
                   >
-                    Date : {file.date}
-                  </small>
+                    <strong
+                      style={{ color: "black", fontSize: "14px" }}
+                      className="px-2 py-1"
+                    >
+                      City: {file.city}
+                    </strong>
+                    Page No : {file.pageNo}
+                  </span>
+                  <div className="card-body px-2 py-1">
+                    <button
+                      onClick={() => navigate(file._id)}
+                      className="btn btn-success mx-1"
+                    >
+                      Edit
+                    </button>
+                    {/* delete button */}
+                    <button
+                      onClick={() => {
+                        confirmBox(file);
+                      }}
+                      className="btn btn-danger mx-1"
+                    >
+                      Delete
+                    </button>
+                    <small
+                      style={{
+                        // color: "grey",
+                        fontSize: "13px",
+                        marginLeft: "24px",
+                      }}
+                    >
+                      Date : {file.date}
+                    </small>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
+            ))
         ) : (
           <div className="container mt-2">
             <div className="row">

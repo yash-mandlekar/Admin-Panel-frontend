@@ -7,7 +7,7 @@ import { AuthContext } from "../../App";
 import AnimatedRoutes from "./AnimatedRoutes";
 
 const Navbar = () => {
-  const { userData, setloading } = useContext(AuthContext);
+  const { userData, setloading, progress } = useContext(AuthContext);
   const navigator = useNavigate();
   const [search, setsearch] = useState("");
   const [AllUsers, setAllUsers] = useState([]);
@@ -172,15 +172,15 @@ const Navbar = () => {
                   <div className="sb-nav-link-icon"></div>
                   Manage E-Paper Cordinates
                 </Link>
-                <Link className="nav-link" to="/categories">
-                  <i className="bi bi-bounding-box"></i>
-                  <div className="sb-nav-link-icon"></div>
-                  Categories
-                </Link>
                 <Link className="nav-link" to="/news-categories">
                   <i className="bi bi-bounding-box"></i>
                   <div className="sb-nav-link-icon"></div>
                   News Categories
+                </Link>
+                <Link className="nav-link" to="/categories">
+                  <i className="bi bi-bounding-box"></i>
+                  <div className="sb-nav-link-icon"></div>
+                  Categories
                 </Link>
                 <Link className="nav-link" to="/folderManagement">
                   <i className="bi bi-menu-button-wide"></i>

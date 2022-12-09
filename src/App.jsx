@@ -49,7 +49,13 @@ const App = () => {
   return (
     <>
       <AuthContext.Provider
-        value={{ Auth, setAuth, userData, setuserData, setloading }}
+        value={{
+          Auth,
+          setAuth,
+          userData,
+          setuserData,
+          setloading,
+        }}
       >
         {loading && (
           <div className="loader">

@@ -859,10 +859,12 @@ a[aria-expanded="true"] .white-arrow {
 .showAllFile-container::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .btn-danger,
 .btn-primary,
+.btn-dark,
 .btn-success,
 .btn-warning {
   position: relative !important;
@@ -1099,4 +1101,8 @@ a[aria-expanded="true"] .white-arrow {
 }
 .react-confirm-alert-body {
   min-width: 30vw !important;
+}
+.vjs-big-play-button {
+  width: 1.7em !important;
+  border-radius: 2.3em !important;
 }
