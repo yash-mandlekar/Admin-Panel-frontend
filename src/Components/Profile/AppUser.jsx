@@ -7,19 +7,23 @@ const AppUser = () => {
   const { userData } = useContext(AuthContext);
   const navigate = useNavigate();
   const [UserProfile, setUserProfile] = useState({
-    name: "",
+    businessAcc: "no",
+    createdAt: "2022-12-09T09:33:06.497Z",
+    dateOfBirth: "2022-12-09T09:33:06.497Z",
     email: "",
-    phone: "",
-    address: "",
-    city: "",
-    state: "",
-    country: "",
-    _id: "",
-    profileImage: "",
-    channels: [],
-    folders: [],
-    news: [],
-    child: [],
+    followers: [],
+    following: [],
+    followrequest: [],
+    gender: "Male",
+    interest: "",
+    isBlocked: false,
+    isVerified: false,
+    name: "Ankit",
+    phone: "7999632726",
+    posts: [],
+    profileImage: "/images/avtar.jpg",
+    publicPro: false,
+    __v: 0,
   });
   const { id } = useParams();
   useEffect(() => {
@@ -31,7 +35,8 @@ const AppUser = () => {
         token: JSON.parse(localStorage.getItem("accessToken")),
       },
     };
-    const response = await Axios.get(`/users/${id}`, config);
+    const response = await Axios.get(`/user/profile/${id}`, config);
+    console.log(response.data.user);
     setUserProfile(response.data.user);
   };
   const confirmBox = (block) => {
@@ -77,10 +82,14 @@ const AppUser = () => {
                   />
                 </div>
               </div>
-              <div style={{ marginTop: "130px", marginLeft: "200px" }}>
-                <h5>{UserProfile.username}</h5>
-                <p>{UserProfile.role}</p>
+              <div style={{ marginTop: "130px", marginLeft: "20vw" }}>
+                <h5>{UserProfile.name}</h5>
               </div>
+              <p>
+                {UserProfile.businessAcc === "yes"
+                  ? "Business Account"
+                  : "Normal Account"}
+              </p>
               {userData._id === UserProfile._id && (
                 <div
                   className="btn btn-dark"
@@ -100,7 +109,7 @@ const AppUser = () => {
                     className="card px-1 mt-3"
                     style={{ zIndex: "1", width: "14rem", color: "black" }}
                   >
-                    Contact :- +91 {UserProfile.mobile}
+                    Contact :- +91 {UserProfile.phone}
                   </div>
                   {userData.role.toLowerCase() === "admin" &&
                     UserProfile.role !== "admin" && (
@@ -118,16 +127,16 @@ const AppUser = () => {
                 </div>
                 <div className="d-flex ">
                   <div>
-                    <p className="mb-1 h5">{UserProfile.channels.length}</p>
-                    <p className="small text-muted mb-0">Channels</p>
+                    <p className="mb-1 h5">{UserProfile.following.length}</p>
+                    <p className="small text-muted mb-0">Following</p>
                   </div>
                   <div className="px-3">
-                    <p className="mb-1 h5">{UserProfile.folders.length}</p>
-                    <p className="small text-muted mb-0">Folders</p>
+                    <p className="mb-1 h5">{UserProfile.followers.length}</p>
+                    <p className="small text-muted mb-0">Followers</p>
                   </div>
                   <div>
-                    <p className="mb-1 h5">{UserProfile.news.length}</p>
-                    <p className="small text-muted mb-0">News</p>
+                    <p className="mb-1 h5">{UserProfile.posts.length}</p>
+                    <p className="small text-muted mb-0">Posts</p>
                   </div>
                 </div>
               </div>
@@ -140,35 +149,16 @@ const AppUser = () => {
                     Email:- {UserProfile.email}
                   </p>
                   <p className="font-italic mb-1">
-                    Country:- {UserProfile.country}
+                    Gender:- {UserProfile.gender}
                   </p>
                   <p className="font-italic mb-1">
-                    State:- {UserProfile.state}
+                    DOB:- {UserProfile.dateOfBirth.slice(0, 10)}
                   </p>
-                  <p className="font-italic mb-1">City:- {UserProfile.city}</p>
+                  <p className="font-italic mb-1">
+                    Account :- {UserProfile.publicPro ? "Public" : "Private"}
+                  </p>
                 </div>
               </div>
-              {UserProfile.role !== "Reporter" && (
-                <div className="mb-5">
-                  <p className="lead fw-normal mb-1">Team Members :- </p>
-                  <div className="p-4" style={{ backgroundColor: "#f8f9fa" }}>
-                    <ul className="list-group">
-                      {UserProfile.child.map((user) => (
-                        <Link
-                          to={`/profile/${user._id}`}
-                          key={user._id}
-                          className="list-group-item d-flex justify-content-between align-items-center w-100"
-                        >
-                          {user.username}
-                          <span className="badge bg-dark rounded-pill">
-                            {user.role}
-                          </span>
-                        </Link>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
