@@ -69,7 +69,6 @@ const AddNews = () => {
     if (
       !showInSlider ||
       !sliderPriority ||
-      !publishDateTime ||
       !latestNews ||
       !latestNewsPriority ||
       !e.target.file.files[0] ||

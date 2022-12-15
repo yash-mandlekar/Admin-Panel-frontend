@@ -5895,7 +5895,7 @@
             .join(" ");
           return (
             this.name +
-            (t == "" ? "" : ` className="${t}"`) +
+            (t == "" ? "" : ` class="${t}"`) +
             (!e ? "" : ` style="${e}"`) +
             (n == "" ? "" : ` ${n}`)
           );
@@ -30850,7 +30850,7 @@
       function iT(t) {
         return t
           .replace(
-            /<span(?: className="Apple-converted-space"|)>(\s+)<\/span>/g,
+            /<span(?: class="Apple-converted-space"|)>(\s+)<\/span>/g,
             (t, e) => {
               if (e.length == 1) {
                 return " ";
@@ -31094,7 +31094,7 @@
         return Array.isArray(t) ? t.sort().join(",") : t;
       }
       const hT =
-        '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M4 0v1H1v3H0V.5A.5.5 0 0 1 .5 0H4zm8 0h3.5a.5.5 0 0 1 .5.5V4h-1V1h-3V0zM4 16H.5a.5.5 0 0 1-.5-.5V12h1v3h3v1zm8 0v-1h3v-3h1v3.5a.5.5 0 0 1-.5.5H12z"/><path fill-opacity=".256" d="M1 1h14v14H1z"/><g className="ck-icon__selected-indicator"><path d="M7 0h2v1H7V0zM0 7h1v2H0V7zm15 0h1v2h-1V7zm-8 8h2v1H7v-1z"/><path fill-opacity=".254" d="M1 1h14v14H1z"/></g></svg>';
+        '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M4 0v1H1v3H0V.5A.5.5 0 0 1 .5 0H4zm8 0h3.5a.5.5 0 0 1 .5.5V4h-1V1h-3V0zM4 16H.5a.5.5 0 0 1-.5-.5V12h1v3h3v1zm8 0v-1h3v-3h1v3.5a.5.5 0 0 1-.5.5H12z"/><path fill-opacity=".256" d="M1 1h14v14H1z"/><g class="ck-icon__selected-indicator"><path d="M7 0h2v1H7V0zM0 7h1v2H0V7zm15 0h1v2h-1V7zm-8 8h2v1H7v-1z"/><path fill-opacity=".254" d="M1 1h14v14H1z"/></g></svg>';
       const fT = "ck-widget";
       const gT = "ck-widget_selected";
       function mT(t) {
@@ -32457,12 +32457,10 @@
         }
         _setupDropMarker() {
           const t = this.editor;
-          t.conversion
-            .for("editingDowncast")
-            .markerToHighlight({
-              model: "drop-target",
-              view: { classes: ["ck-clipboard-drop-target-range"] },
-            });
+          t.conversion.for("editingDowncast").markerToHighlight({
+            model: "drop-target",
+            view: { classes: ["ck-clipboard-drop-target-range"] },
+          });
           t.conversion.for("editingDowncast").markerToElement({
             model: "drop-target",
             view: (e, { writer: n }) => {
@@ -33237,13 +33235,11 @@
           }
         }
         _addDefaultH1Conversion(t) {
-          t.conversion
-            .for("upcast")
-            .elementToElement({
-              model: "heading1",
-              view: "h1",
-              converterPriority: c.get("low") + 1,
-            });
+          t.conversion.for("upcast").elementToElement({
+            model: "heading1",
+            view: "h1",
+            converterPriority: c.get("low") + 1,
+          });
         }
       }
       function JM(t) {
@@ -35166,12 +35162,10 @@
           const n = t.plugins.get("ImageUtils");
           const o = t.plugins.get("ImageCaptionUtils");
           const i = t.t;
-          t.conversion
-            .for("upcast")
-            .elementToElement({
-              view: (t) => o.matchImageCaptionViewElement(t),
-              model: "caption",
-            });
+          t.conversion.for("upcast").elementToElement({
+            view: (t) => o.matchImageCaptionViewElement(t),
+            model: "caption",
+          });
           t.conversion.for("dataDowncast").elementToElement({
             model: "caption",
             view: (t, { writer: e }) => {
@@ -37221,18 +37215,14 @@
           t.conversion
             .for("dataDowncast")
             .attributeToElement({ model: "linkHref", view: aD });
-          t.conversion
-            .for("editingDowncast")
-            .attributeToElement({
-              model: "linkHref",
-              view: (t, e) => aD(cD(t), e),
-            });
-          t.conversion
-            .for("upcast")
-            .elementToAttribute({
-              view: { name: "a", attributes: { href: true } },
-              model: { key: "linkHref", value: (t) => t.getAttribute("href") },
-            });
+          t.conversion.for("editingDowncast").attributeToElement({
+            model: "linkHref",
+            view: (t, e) => aD(cD(t), e),
+          });
+          t.conversion.for("upcast").elementToAttribute({
+            view: { name: "a", attributes: { href: true } },
+            model: { key: "linkHref", value: (t) => t.getAttribute("href") },
+          });
           t.commands.add("link", new sB(t));
           t.commands.add("unlink", new aB(t));
           const e = dD(t.t, uD(t.config.get("link.decorators")));
@@ -37296,12 +37286,10 @@
                 }
               },
             });
-            e.conversion
-              .for("upcast")
-              .elementToAttribute({
-                view: { name: "a", ...t._createPattern() },
-                model: { key: t.id },
-              });
+            e.conversion.for("upcast").elementToAttribute({
+              view: { name: "a", ...t._createPattern() },
+              model: { key: t.id },
+            });
           });
         }
         _enableLinkOpen() {
@@ -37783,24 +37771,20 @@
           this._balloon = t.plugins.get(Wy);
           this._createToolbarLinkButton();
           this._enableUserBalloonInteractions();
-          t.conversion
-            .for("editingDowncast")
-            .markerToHighlight({
-              model: PB,
-              view: { classes: ["ck-fake-link-selection"] },
-            });
-          t.conversion
-            .for("editingDowncast")
-            .markerToElement({
-              model: PB,
-              view: {
-                name: "span",
-                classes: [
-                  "ck-fake-link-selection",
-                  "ck-fake-link-selection_collapsed",
-                ],
-              },
-            });
+          t.conversion.for("editingDowncast").markerToHighlight({
+            model: PB,
+            view: { classes: ["ck-fake-link-selection"] },
+          });
+          t.conversion.for("editingDowncast").markerToElement({
+            model: PB,
+            view: {
+              name: "span",
+              classes: [
+                "ck-fake-link-selection",
+                "ck-fake-link-selection_collapsed",
+              ],
+            },
+          });
         }
         destroy() {
           super.destroy();
@@ -40356,7 +40340,7 @@
       }
       function Vz(t) {
         return t.replace(
-          /<span(?: className="Apple-converted-space"|)>(\s+)<\/span>/g,
+          /<span(?: class="Apple-converted-space"|)>(\s+)<\/span>/g,
           (t, e) =>
             e.length === 1
               ? " "
