@@ -21,7 +21,7 @@ const AddNews = () => {
     e.preventDefault();
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const formData = new FormData();

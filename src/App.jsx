@@ -7,9 +7,9 @@ import React, {
   Suspense,
 } from "react";
 import Login from "./Components/Login/Login";
+import Navbar from "./Components/Navbar/Navbar";
 import { NewtonsCradle } from "@uiball/loaders";
 export const AuthContext = createContext();
-const Navbar = lazy(() => import("./Components/Navbar/Navbar"));
 
 const App = () => {
   const [Auth, setAuth] = useState(false);
@@ -29,7 +29,7 @@ const App = () => {
     };
   }, []);
   useEffect(() => {
-    const refreshToken = JSON.parse(localStorage.getItem("refreshToken"));
+    const refreshToken = JSON.parse(localStorage.getItem("refreshTokenAdmin"));
     if (refreshToken) {
       Axios.post("/refreshtoken", {
         token: refreshToken,

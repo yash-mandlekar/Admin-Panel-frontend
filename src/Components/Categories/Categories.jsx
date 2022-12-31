@@ -38,7 +38,7 @@ const Categories = () => {
   const showCategoryList = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const res = await Axios.get("/category", config);
@@ -65,7 +65,7 @@ const Categories = () => {
     e.preventDefault();
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const res = await Axios.put(
@@ -102,7 +102,7 @@ const Categories = () => {
     e.preventDefault();
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     try {
@@ -154,7 +154,7 @@ const Categories = () => {
   const handleDelete = async (item) => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     await Axios.delete(`/category/${item._id}`, config);

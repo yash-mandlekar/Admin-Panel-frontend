@@ -28,7 +28,7 @@ const UserProfile = () => {
   const getUser = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const response = await Axios.get(`/users/${id}`, config);
@@ -53,7 +53,7 @@ const UserProfile = () => {
   const handleBlock = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     await Axios.post("/block-user", { user2: id }, config);

@@ -42,7 +42,7 @@ const News = () => {
   const getNews = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const { data } = await Axios.get("/pending/news", config);
@@ -62,7 +62,7 @@ const News = () => {
   const deleteNews = async (file) => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     try {

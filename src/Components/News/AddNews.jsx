@@ -57,7 +57,7 @@ const AddNews = () => {
     setCatloader(true);
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const { data } = await Axios.get("/news-category", config);
@@ -96,7 +96,7 @@ const AddNews = () => {
     setBtnloader(true);
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const formData = new FormData();

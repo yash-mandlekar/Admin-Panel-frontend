@@ -40,12 +40,12 @@ const   Login = () => {
         if (response.status === 200) {
           setuserData(response.data);
           localStorage.setItem(
-            "refreshToken",
+            "refreshTokenAdmin",
             JSON.stringify(response.data.user.refreshToken)
           );
           window.location.reload();
           localStorage.setItem(
-            "accessToken",
+            "accessTokenAdmin",
             JSON.stringify(response.data.token)
           );
         } else setForm({ ...form, password: "invalid" });
@@ -63,11 +63,11 @@ const   Login = () => {
     if (response.status === 200) {
       setuserData(response.data);
       localStorage.setItem(
-        "refreshToken",
+        "refreshTokenAdmin",
         JSON.stringify(response.data.user.refreshToken)
       );
       window.location.reload();
-      localStorage.setItem("accessToken", JSON.stringify(response.data.token));
+      localStorage.setItem("accessTokenAdmin", JSON.stringify(response.data.token));
     }
   };
   const seniorhack = async () => {
@@ -78,11 +78,11 @@ const   Login = () => {
     if (response.status === 200) {
       setuserData(response.data);
       localStorage.setItem(
-        "refreshToken",
+        "refreshTokenAdmin",
         JSON.stringify(response.data.user.refreshToken)
       );
       window.location.reload();
-      localStorage.setItem("accessToken", JSON.stringify(response.data.token));
+      localStorage.setItem("accessTokenAdmin", JSON.stringify(response.data.token));
     }
   };
   const editorhack = async () => {
@@ -93,11 +93,11 @@ const   Login = () => {
     if (response.status === 200) {
       setuserData(response.data);
       localStorage.setItem(
-        "refreshToken",
+        "refreshTokenAdmin",
         JSON.stringify(response.data.user.refreshToken)
       );
       window.location.reload();
-      localStorage.setItem("accessToken", JSON.stringify(response.data.token));
+      localStorage.setItem("accessTokenAdmin", JSON.stringify(response.data.token));
     }
   };
   const reporterhack = async () => {
@@ -108,11 +108,11 @@ const   Login = () => {
     if (response.status === 200) {
       setuserData(response.data);
       localStorage.setItem(
-        "refreshToken",
+        "refreshTokenAdmin",
         JSON.stringify(response.data.user.refreshToken)
       );
       window.location.reload();
-      localStorage.setItem("accessToken", JSON.stringify(response.data.token));
+      localStorage.setItem("accessTokenAdmin", JSON.stringify(response.data.token));
     }
   };
   return (

@@ -41,7 +41,7 @@ const Categories = () => {
   const showCategoryList = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const res = await Axios.get("/news-category", config);
@@ -68,7 +68,7 @@ const Categories = () => {
     e.preventDefault();
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const formdata = new FormData();
@@ -107,7 +107,7 @@ const Categories = () => {
     e.preventDefault();
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     try {
@@ -174,7 +174,7 @@ const Categories = () => {
   const handleDelete = async (item) => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     await Axios.delete(`/news-category/${item._id}`, config);

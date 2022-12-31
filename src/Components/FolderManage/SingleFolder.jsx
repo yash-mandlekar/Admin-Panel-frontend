@@ -52,7 +52,7 @@ const SingleFolder = () => {
     try {
       const config = {
         headers: {
-          token: JSON.parse(localStorage.getItem("accessToken")),
+          token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
         },
       };
       const res = await Axios.get("/category", config);
@@ -64,7 +64,7 @@ const SingleFolder = () => {
   const ShowFiles = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const res = await Axios.get(`/open/folder/${id}`, config);
@@ -74,7 +74,7 @@ const SingleFolder = () => {
   const showChannelList = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const res = await Axios.get("/channel", config);
@@ -131,7 +131,7 @@ const SingleFolder = () => {
             formData,
             {
               headers: {
-                token: JSON.parse(localStorage.getItem("accessToken")),
+                token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
                 "Content-Type": "multipart/form-data",
               },
               onUploadProgress: (progressEvent) => {
@@ -243,7 +243,7 @@ const SingleFolder = () => {
           {
             headers: {
               "Content-Type": "multipart/form-data",
-              token: JSON.parse(localStorage.getItem("accessToken")),
+              token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
             },
             onUploadProgress: (progressEvent) => {
               setprogress(progressEvent.loaded / progressEvent.total);
@@ -317,7 +317,7 @@ const SingleFolder = () => {
   const deleteFile = async (fileId, i) => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     await Axios.delete(`/shorts/${fileId}`, {
@@ -344,7 +344,7 @@ const SingleFolder = () => {
   const editFile = async (fileId, i) => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const res = await Axios.get(`/shorts/${fileId}`, config);

@@ -19,7 +19,7 @@ const FolderManage = () => {
   const ShowFolder = async (id) => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const res = await Axios.get("/folder", config);
@@ -36,7 +36,7 @@ const FolderManage = () => {
     e.preventDefault();
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     await Axios.post(
@@ -50,7 +50,7 @@ const FolderManage = () => {
   const handleDeleteFolder = async (id) => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const res = await Axios.delete("/folder/", {
@@ -65,7 +65,7 @@ const FolderManage = () => {
     e.preventDefault();
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     await Axios.put(

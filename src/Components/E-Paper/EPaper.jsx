@@ -22,7 +22,7 @@ const EPaper = () => {
   const getEPaper = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     setLoader(true);
@@ -33,7 +33,7 @@ const EPaper = () => {
   const deleteEPaper = async (file) => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     await Axios.delete(`/ePaper/${file._id}`, config);

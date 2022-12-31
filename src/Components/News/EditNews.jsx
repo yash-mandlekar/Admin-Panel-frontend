@@ -55,7 +55,7 @@ const EditNews = () => {
   const getNews = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const { data } = await Axios.get(`/news/${id}`, config);
@@ -64,7 +64,7 @@ const EditNews = () => {
   const getCategories = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const { data } = await Axios.get("/news-category", config);
@@ -74,7 +74,7 @@ const EditNews = () => {
     e.preventDefault();
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const formData = new FormData();

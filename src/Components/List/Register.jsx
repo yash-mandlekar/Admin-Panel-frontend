@@ -186,7 +186,7 @@ const Profile = () => {
     // submit the form
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     try {
@@ -357,7 +357,7 @@ const Profile = () => {
       }
       const config = {
         headers: {
-          token: JSON.parse(localStorage.getItem("accessToken")),
+          token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
         },
       };
       if (e.target.value.toLowerCase() === "editor") {

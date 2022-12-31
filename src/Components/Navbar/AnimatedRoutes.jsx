@@ -32,7 +32,7 @@ const AnimatedRoutes = () => {
   return (
     <AnimatePresence>
       <Routes location={location} key={location.pathname}>
-        <Route path="/admin/" element={<Home />} />
+        <Route path="/admin" element={<Home />} />
         <Route path="/admin/channel" element={<Channel />} />
         <Route path="/admin/folderManagement" element={<FolderManage />} />
         <Route path="/admin/folder/:id" element={<VideoData />} />

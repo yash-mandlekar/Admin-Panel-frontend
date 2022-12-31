@@ -25,7 +25,7 @@ const AddNews = () => {
   const getEPaper = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const { data } = await Axios.get(`/ePaper/${id}`, config);
@@ -35,7 +35,7 @@ const AddNews = () => {
     e.preventDefault();
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const formData = new FormData();

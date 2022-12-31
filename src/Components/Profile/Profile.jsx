@@ -145,7 +145,7 @@ const Profile = () => {
     // submit the form
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     Axios.post(
@@ -225,7 +225,7 @@ const Profile = () => {
       });
       const config = {
         headers: {
-          token: JSON.parse(localStorage.getItem("accessToken")),
+          token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
         },
       };
       Axios.post(
@@ -390,7 +390,7 @@ const Profile = () => {
     formData.append("fileType", file.type.split("/")[0]);
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
         contentType: "multipart/form-data",
       },
     };

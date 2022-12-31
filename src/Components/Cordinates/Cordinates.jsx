@@ -14,7 +14,7 @@ const Cordinates = () => {
   const getCordinates = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const { data } = await Axios.get("/ePaperCoord", config);
@@ -24,7 +24,7 @@ const Cordinates = () => {
   const deleteCordinates = async (file) => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     await Axios.delete(`/Cordinates/${file}`, config);

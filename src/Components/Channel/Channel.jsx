@@ -50,7 +50,7 @@ const Channel = () => {
   const showChannelList = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const res = await Axios.get("/channel", config);
@@ -67,7 +67,7 @@ const Channel = () => {
     e.preventDefault();
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     try {
@@ -119,7 +119,7 @@ const Channel = () => {
   const handleDeleteChannel = (id) => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     Axios.delete("/channel", {
@@ -142,7 +142,7 @@ const Channel = () => {
     setShowForm(true);
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const res = await Axios.get(`/open/channel/${id}`, config);
@@ -153,7 +153,7 @@ const Channel = () => {
     e.preventDefault();
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     await Axios.put("/channel", ChannelForm, config);

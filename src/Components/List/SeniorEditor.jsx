@@ -12,7 +12,7 @@ const SeniorEditor = () => {
   const GetSeniorEditor = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const response = await Axios.get("/senior-editor", config);
@@ -40,7 +40,7 @@ const SeniorEditor = () => {
   const handleBlock = async (id) => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const response = await Axios.post("/block-user", { user2: id }, config);

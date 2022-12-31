@@ -12,7 +12,7 @@ const Repoter = () => {
   const GetRepoter = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const response = await Axios.get("/reporter", config);
@@ -38,7 +38,7 @@ const Repoter = () => {
   const handleBlock = async (id) => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     const response = await Axios.post("/block-user", { user2: id }, config);

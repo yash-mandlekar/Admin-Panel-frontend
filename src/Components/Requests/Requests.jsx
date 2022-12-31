@@ -12,7 +12,7 @@ const Requests = () => {
   }, []);
   const showRequests = async () => {
     const res = await Axios.post("/refreshtoken", {
-      token: JSON.parse(localStorage.getItem("refreshToken")),
+      token: JSON.parse(localStorage.getItem("refreshTokenAdmin")),
     });
     setNewsList(res.data.user.requests);
     setLoader(false);
@@ -20,7 +20,7 @@ const Requests = () => {
   const approved = async (item) => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     console.log(item);
@@ -30,7 +30,7 @@ const Requests = () => {
   const notApproved = async (item) => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     await Axios.delete(`/news/${item._id}`, config);

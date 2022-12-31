@@ -16,8 +16,8 @@ const Navbar = () => {
       .then((res) => {
         setloading(true);
         navigate("/admin/");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshTokenAdmin");
+        localStorage.removeItem("accessTokenAdmin");
         window.location.reload();
       })
       .catch((err) => {
@@ -36,7 +36,7 @@ const Navbar = () => {
     if (e.target.value.length > 0) {
       const config = {
         headers: {
-          token: JSON.parse(localStorage.getItem("accessToken")),
+          token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
         },
       };
       const res = await Axios.get("/users", config);

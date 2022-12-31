@@ -46,7 +46,7 @@ const Home = () => {
   const getNews = async () => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
       onDownloadProgress: function (progressEvent) {
         setProgress({
@@ -84,7 +84,7 @@ const Home = () => {
   const deleteNews = async (file) => {
     const config = {
       headers: {
-        token: JSON.parse(localStorage.getItem("accessToken")),
+        token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
     };
     await Axios.delete(`/news/${file._id}`, {
