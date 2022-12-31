@@ -381,7 +381,7 @@ const SingleFolder = () => {
         <div className="container">
           <div className="showDropzone-container mt-2 mx-2">
             <button
-              onClick={() => navigate("/folderManagement")}
+              onClick={() => navigate("navigate/folderManagement")}
               className="btn btn-danger mx-2"
             >
               <i className="bi bi-arrow-left-circle"> </i>

@@ -5,7 +5,7 @@ import Axios from "../Axios/Axios";
 import Style from "./News.module.css";
 import CKeditor from "./CKeditor";
 const AddNews = () => {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const [Categories, setCategories] = useState([]);
   const [Focused, setFocused] = useState(false);
   const [btnloader, setBtnloader] = useState(false);
@@ -130,7 +130,7 @@ const AddNews = () => {
         });
       }, 3000);
       setBtnloader(false);
-      navigation("/news");
+      navigate("/admin/news");
     } catch (err) {
       setalert({
         show: true,
@@ -441,7 +441,7 @@ const AddNews = () => {
             <div className={Style.btnGroup}>
               {/* Cancel Button */}
               <button
-                onClick={() => navigation("/news")}
+                onClick={() => navigate("/admin/news")}
                 className="btn btn-danger mx-auto col-5"
                 type="button"
               >

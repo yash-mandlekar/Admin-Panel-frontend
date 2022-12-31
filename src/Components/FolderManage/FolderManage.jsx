@@ -30,7 +30,7 @@ const FolderManage = () => {
     ShowFolder();
   }, []);
   const handleOpenFolder = (id) => {
-    navigate(`/folder/${id}`);
+    navigate(`/admin/folder/${id}`);
   };
   const handleAddFolder = async (e) => {
     e.preventDefault();

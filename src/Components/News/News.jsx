@@ -98,7 +98,7 @@ const News = () => {
       <h1 className="display-6">Pending News :- </h1>
       <div className="showDropzone-container mt-2 mx-2">
         <button
-          onClick={() => navigate("/news/new")}
+          onClick={() => navigate("/admin/news/new")}
           className="btn btn-dark mx-2"
         >
           <i className="bi bi-plus-circle-dotted"> </i>
@@ -191,7 +191,7 @@ const News = () => {
                     )}
                   </p>
                   <button
-                    onClick={() => navigate(`/news/edit/${file._id}`)}
+                    onClick={() => navigate(`/admin/news/edit/${file._id}`)}
                     className="btn btn-dark mx-1"
                   >
                     Edit

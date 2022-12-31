@@ -55,7 +55,7 @@ const Cordinates = () => {
       <h1 className="display-6">Co-ordinates :- </h1>
       <div className="showDropzone-container mt-2 mx-2">
         <button
-          onClick={() => navigate("/cordinates/new")}
+          onClick={() => navigate("/admin/cordinates/new")}
           className="btn btn-dark mx-2"
         >
           <i className="bi bi-plus-circle-dotted"> </i>
@@ -132,7 +132,7 @@ const Cordinates = () => {
                                 <td className="align-middle">
                                   <button
                                     onClick={() =>
-                                      navigate(`/cordinates/${item._id}`)
+                                      navigate(`/admin/cordinates/${item._id}`)
                                     }
                                     className="btn btn-success"
                                   >

@@ -32,37 +32,37 @@ const AnimatedRoutes = () => {
   return (
     <AnimatePresence>
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Home />} />
-        <Route path="/channel" element={<Channel />} />
-        <Route path="/folderManagement" element={<FolderManage />} />
-        <Route path="/folder/:id" element={<VideoData />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/news-categories" element={<NewsCat />} />
-        <Route path="/profile/:id" element={<UserProfile />} />
-        <Route path="/userprofile/:id" element={<AppUser />} />
-        <Route path="/requests" element={<Requests />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/news">
+        <Route path="/admin/" element={<Home />} />
+        <Route path="/admin/channel" element={<Channel />} />
+        <Route path="/admin/folderManagement" element={<FolderManage />} />
+        <Route path="/admin/folder/:id" element={<VideoData />} />
+        <Route path="/admin/profile" element={<Profile />} />
+        <Route path="/admin/news-categories" element={<NewsCat />} />
+        <Route path="/admin/profile/:id" element={<UserProfile />} />
+        <Route path="/admin/userprofile/:id" element={<AppUser />} />
+        <Route path="/admin/requests" element={<Requests />} />
+        <Route path="/admin/categories" element={<Categories />} />
+        <Route path="/admin/news">
           <Route index element={<News />} />
           <Route path=":id" element={<SingleNews />} />
           <Route path="new" element={<AddNews />} />
           <Route path="edit/:id" element={<EditNews />} />
         </Route>
-        <Route path="/e-paper">
+        <Route path="/admin/e-paper">
           <Route index element={<EPaper />} />
           <Route path="new" element={<AddEPaper />} />
           <Route path=":id" element={<EditEPaper />} />
         </Route>
-        <Route path="/cordinates">
+        <Route path="/admin/cordinates">
           <Route index element={<Cordinates />} />
           <Route path="new" element={<AddCordinates />} />
           <Route path=":id" element={<EditCordinates />} />
         </Route>
-        <Route path="/users" element={<Users />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/seniorEditor" element={<SeniorEditor />} />
-        <Route path="/editor" element={<Editor />} />
-        <Route path="/repoter" element={<Repoter />} />
+        <Route path="/admin/users" element={<Users />} />
+        <Route path="/admin/register" element={<Register />} />
+        <Route path="/admin/seniorEditor" element={<SeniorEditor />} />
+        <Route path="/admin/editor" element={<Editor />} />
+        <Route path="/admin/repoter" element={<Repoter />} />
       </Routes>
     </AnimatePresence>
   );

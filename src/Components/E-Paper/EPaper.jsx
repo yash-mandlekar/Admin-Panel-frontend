@@ -98,7 +98,7 @@ const EPaper = () => {
       <h1 className="display-6">E-Paper :- </h1>
       <div className="showDropzone-container mt-2 mx-2 d-flex">
         <button
-          onClick={() => navigate("/e-paper/new")}
+          onClick={() => navigate("/admin/e-paper/new")}
           className="btn btn-dark mx-2"
         >
           <i className="bi bi-plus-circle-dotted"> </i>
@@ -212,7 +212,7 @@ const EPaper = () => {
                   </span>
                   <div className="card-body px-2 py-1">
                     <button
-                      onClick={() => navigate(file._id)}
+                      onClick={() => navigate("/admin/"+file._id)}
                       className="btn btn-success mx-1"
                     >
                       Edit

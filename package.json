@@ -2,6 +2,7 @@
   "name": "frontend-lokdesh",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://lokdeshtv.com/admin/",
   "dependencies": {
     "@ckeditor/ckeditor5-react": "^5.0.3",
     "@testing-library/jest-dom": "^5.16.5",
@@ -49,5 +50,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://52.66.186.55/"
+  "proxy": "http://localhost:4000/"
 }

@@ -93,7 +93,7 @@ const AppUser = () => {
               {userData._id === UserProfile._id && (
                 <div
                   className="btn btn-dark"
-                  onClick={() => navigate("/profile")}
+                  onClick={() => navigate("/admin/profile")}
                 >
                   Edit Profile
                 </div>

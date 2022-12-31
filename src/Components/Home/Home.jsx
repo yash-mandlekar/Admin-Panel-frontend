@@ -225,7 +225,7 @@ const Home = () => {
                     )}
                   </p>
                   <button
-                    onClick={() => navigate(`/news/edit/${file._id}`)}
+                    onClick={() => navigate(`/admin/news/edit/${file._id}`)}
                     className="btn btn-dark mx-1"
                   >
                     Edit

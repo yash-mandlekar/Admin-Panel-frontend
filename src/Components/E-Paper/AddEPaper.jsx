@@ -41,7 +41,7 @@ const AddNews = () => {
           message: "",
         });
       }, 3000);
-      navigation("/e-paper");
+      navigation("/admin/e-paper");
     } catch (err) {
       setalert({
         show: true,
@@ -135,7 +135,7 @@ const AddNews = () => {
             <div className={Style.btnGroup}>
               {/* Cancel Button */}
               <button
-                onClick={() => navigation("/e-paper")}
+                onClick={() => navigation("/admin/e-paper")}
                 className="btn btn-danger mx-auto col-5"
                 type="button"
               >

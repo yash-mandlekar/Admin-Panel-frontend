@@ -6,7 +6,7 @@ import Style from "./News.module.css";
 import CKeditor from "./CKeditor";
 const EditNews = () => {
   const { id } = useParams();
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const [Categories, setCategories] = useState([]);
   const [Focused, setFocused] = useState(false);
   const [categoryInp, setcategoryInp] = useState("");
@@ -107,7 +107,7 @@ const EditNews = () => {
           message: "",
         });
       }, 3000);
-      navigation(-1);
+      navigate(-1);
     } catch (err) {
       setalert({
         show: true,
@@ -403,7 +403,7 @@ const EditNews = () => {
             <div className={Style.btnGroup}>
               {/* Cancel Button */}
               <button
-                onClick={() => navigation(-1)}
+                onClick={() => navigate(-1)}
                 className="btn btn-danger mx-auto col-5"
                 type="button"
               >

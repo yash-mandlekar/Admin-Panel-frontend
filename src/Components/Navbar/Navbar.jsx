@@ -8,14 +8,14 @@ import AnimatedRoutes from "./AnimatedRoutes";
 
 const Navbar = () => {
   const { userData, setloading, progress } = useContext(AuthContext);
-  const navigator = useNavigate();
+  const navigate = useNavigate();
   const [search, setsearch] = useState("");
   const [AllUsers, setAllUsers] = useState([]);
   const handleLogout = () => {
     Axios.post("/logout")
       .then((res) => {
         setloading(true);
-        navigator("/");
+        navigate("/admin/");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("accessToken");
         window.location.reload();
@@ -47,10 +47,8 @@ const Navbar = () => {
   };
   return (
     <>
-      <nav
-        className="sb-topnav navbar navbar-expand navbar-dark"
-      >
-        <Link className="navbar-brand ps-3" to="/profile">
+      <nav className="sb-topnav navbar navbar-expand navbar-dark">
+        <Link className="navbar-brand ps-3" to="/admin/profile">
           <img src={logo} width="165" alt="" />
         </Link>
         <div className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
@@ -117,7 +115,7 @@ const Navbar = () => {
               aria-labelledby="navbarDropdown"
             >
               <li>
-                <Link className="dropdown-item" to="/profile">
+                <Link className="dropdown-item" to="/admin/profile">
                   Profile
                 </Link>
               </li>
@@ -146,54 +144,54 @@ const Navbar = () => {
           >
             <div className="sb-sidenav-menu">
               <div className="nav">
-                <Link className="nav-link" to="/">
+                <Link className="nav-link" to="/admin/">
                   <i className="bi bi-house"></i>
                   <div className="sb-nav-link-icon"></div>
                   Dashboard
                 </Link>
-                <Link className="nav-link" to="/channel">
+                <Link className="nav-link" to="/admin/channel">
                   <i className="bi bi-bricks"></i>
                   <div className="sb-nav-link-icon"></div>
                   Channel
                 </Link>
-                <Link className="nav-link" to="/news">
+                <Link className="nav-link" to="/admin/news">
                   <i className="bi bi-newspaper"></i>
                   <div className="sb-nav-link-icon"></div>
                   Manage News
                 </Link>
-                <Link className="nav-link" to="/e-paper">
+                <Link className="nav-link" to="/admin/e-paper">
                   <i className="bi bi-pencil-square"></i>
                   <div className="sb-nav-link-icon"></div>
                   Manage E-Paper
                 </Link>
-                <Link className="nav-link" to="/cordinates">
+                <Link className="nav-link" to="/admin/cordinates">
                   <i className="bi bi-pencil-square"></i>
                   <div className="sb-nav-link-icon"></div>
                   Manage E-Paper Cordinates
                 </Link>
-                <Link className="nav-link" to="/news-categories">
+                <Link className="nav-link" to="/admin/news-categories">
                   <i className="bi bi-bounding-box"></i>
                   <div className="sb-nav-link-icon"></div>
                   News Categories
                 </Link>
-                <Link className="nav-link" to="/categories">
+                <Link className="nav-link" to="/admin/categories">
                   <i className="bi bi-bounding-box"></i>
                   <div className="sb-nav-link-icon"></div>
                   Categories
                 </Link>
-                <Link className="nav-link" to="/folderManagement">
+                <Link className="nav-link" to="/admin/folderManagement">
                   <i className="bi bi-menu-button-wide"></i>
                   <div className="sb-nav-link-icon"></div>
                   Folder Management
                 </Link>
                 {userData.role !== "Reporter" && (
-                  <Link className="nav-link" to="/requests">
+                  <Link className="nav-link" to="/admin/requests">
                     <i className="bi bi-app-indicator"></i>
                     <div className="sb-nav-link-icon"></div>
                     Requests
                   </Link>
                 )}
-                <Link className="nav-link" to="/users">
+                <Link className="nav-link" to="/admin/users">
                   <i className="bi bi-people-fill"></i> &nbsp;
                   {/* <div className="sb-nav-link-icon"></div> */}
                   Users
@@ -224,17 +222,17 @@ const Navbar = () => {
                 >
                   <nav className="sb-sidenav-menu-nested nav">
                     {userData.role.toLowerCase() === "admin" && (
-                      <Link className="nav-link" to="/register">
+                      <Link className="nav-link" to="/admin/register">
                         Register
                       </Link>
                     )}
-                    <Link className="nav-link" to="/seniorEditor">
+                    <Link className="nav-link" to="/admin/seniorEditor">
                       Senior Editors
                     </Link>
-                    <Link className="nav-link" to="/editor">
+                    <Link className="nav-link" to="/admin/editor">
                       Editors
                     </Link>
-                    <Link className="nav-link" to="/repoter">
+                    <Link className="nav-link" to="/admin/repoter">
                       Repoters
                     </Link>
                   </nav>

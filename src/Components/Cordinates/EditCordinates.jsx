@@ -64,7 +64,7 @@ const EditCordinates = () => {
           message: "",
         });
       }, 3000);
-      navigation("/cordinates");
+      navigation("/admin/cordinates");
     } catch (err) {
       setalert({
         show: true,
@@ -245,7 +245,7 @@ const EditCordinates = () => {
             <div className={Style.btnGroup}>
               {/* Cancel Button */}
               <button
-                onClick={() => navigation("/cordinates")}
+                onClick={() => navigation("/admin/cordinates")}
                 className="btn btn-danger mx-auto col-5"
                 type="button"
               >
