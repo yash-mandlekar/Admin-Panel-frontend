@@ -44,7 +44,7 @@ const ListComp = ({ List, confirmBox, role, loader }) => {
                     style={{ borderRadius: "15px", width: "28rem" }}
                   >
                     <Link
-                      to={`/profile/${item._id}`}
+                      to={`/admin/profile/${item._id}`}
                       style={{ textDecoration: "none" }}
                     >
                       <div className="position-absolute top-0 end-0 px-2">

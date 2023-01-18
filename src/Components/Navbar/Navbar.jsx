@@ -7,7 +7,7 @@ import { AuthContext } from "../../App";
 import AnimatedRoutes from "./AnimatedRoutes";
 
 const Navbar = () => {
-  const { userData, setloading, progress } = useContext(AuthContext);
+  const { userData, setloading } = useContext(AuthContext);
   const navigate = useNavigate();
   const [search, setsearch] = useState("");
   const [AllUsers, setAllUsers] = useState([]);
@@ -128,11 +128,7 @@ const Navbar = () => {
           </li>
         </ul>
       </nav>
-      <div
-        onContextMenu={(e) => e.preventDefault()}
-        id="layoutSidenav"
-        // style={{ backgroundColor: "white" }}
-      >
+      <div onContextMenu={(e) => e.preventDefault()} id="layoutSidenav">
         <div
           id="layoutSidenav_nav"
           style={{ display: nwidth < 994 ? "none" : "initial" }}
@@ -168,6 +164,11 @@ const Navbar = () => {
                   <i className="bi bi-pencil-square"></i>
                   <div className="sb-nav-link-icon"></div>
                   Manage E-Paper Cordinates
+                </Link>
+                <Link className="nav-link" to="/admin/ads">
+                  <i className="bi bi-pencil-square"></i>
+                  <div className="sb-nav-link-icon"></div>
+                  Manage Ads
                 </Link>
                 <Link className="nav-link" to="/admin/news-categories">
                   <i className="bi bi-bounding-box"></i>

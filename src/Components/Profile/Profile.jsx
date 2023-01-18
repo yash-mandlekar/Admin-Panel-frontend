@@ -449,7 +449,7 @@ const Profile = () => {
                     </div>
                   </div>
                   <Link
-                    to={`/profile/${userDatas._id}`}
+                    to={`/admin/profile/${userDatas._id}`}
                     style={{ textDecoration: "none" }}
                   >
                     <div className="position-absolute top-0 end-0 px-2">

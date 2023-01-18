@@ -26,6 +26,9 @@ import Cordinates from "../Cordinates/Cordinates";
 import AddCordinates from "../Cordinates/AddCordinates";
 import EditCordinates from "../Cordinates/EditCordinates";
 import EditNews from "../News/EditNews";
+import Ads from "../Ads/Ads";
+import AddAds from "../Ads/AddAds";
+import EditAds from "../Ads/EditAds";
 const AnimatedRoutes = () => {
   const location = useLocation();
 
@@ -52,6 +55,11 @@ const AnimatedRoutes = () => {
           <Route index element={<EPaper />} />
           <Route path="new" element={<AddEPaper />} />
           <Route path=":id" element={<EditEPaper />} />
+        </Route>
+        <Route path="/admin/ads">
+          <Route index element={<Ads />} />
+          <Route path="new" element={<AddAds />} />
+          <Route path=":id" element={<EditAds />} />
         </Route>
         <Route path="/admin/cordinates">
           <Route index element={<Cordinates />} />

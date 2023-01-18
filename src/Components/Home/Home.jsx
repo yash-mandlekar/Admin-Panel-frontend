@@ -9,11 +9,7 @@ const Home = () => {
   const playerRef = useRef();
   const navigate = useNavigate();
   const [showDesc, setshowDesc] = useState([]);
-  const [progress, setProgress] = useState({
-    height: 0,
-    show: true,
-  });
-  const { height, show } = progress;
+  const [loading, setloading] = useState(true);
   const [News, setNews] = useState([
     {
       _id: "632961209f9a88b2f983197d",
@@ -48,27 +44,28 @@ const Home = () => {
       headers: {
         token: JSON.parse(localStorage.getItem("accessTokenAdmin")),
       },
-      onDownloadProgress: function (progressEvent) {
-        setProgress({
-          ...progress,
-          height: Math.round(
-            (progressEvent.loaded / progressEvent.total) * 100
-          ),
-        });
-        if (
-          Math.round((progressEvent.loaded / progressEvent.total) * 100) === 100
-        ) {
-          setTimeout(() => {
-            setProgress({
-              ...progress,
-              show: false,
-            });
-          }, 500);
-        }
-      },
+      // onDownloadProgress: function (progressEvent) {
+      //   setProgress({
+      //     ...progress,
+      //     height: Math.round(
+      //       (progressEvent.loaded / progressEvent.total) * 100
+      //     ),
+      //   });
+      //   if (
+      //     Math.round((progressEvent.loaded / progressEvent.total) * 100) === 100
+      //   ) {
+      //     setTimeout(() => {
+      //       setProgress({
+      //         ...progress,
+      //         show: false,
+      //       });
+      //     }, 500);
+      //   }
+      // },
     };
+    setloading(true);
     const { data } = await Axios.get("/approved/news", config);
-
+    setloading(false);
     setNews(data);
   };
   const handlePlayerReady = (player) => {
@@ -117,39 +114,16 @@ const Home = () => {
     >
       <h1 className="display-6">Approved News :- </h1>
       <div className="d-flex flex-wrap showAllFile-container">
-        {show ? (
+        {loading ? (
           <div
-            className="line-cnt"
+            className="loader"
             style={{
               width: "100%",
-              height: "30vh",
-              backgroundColor: "white",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              position: "relative",
-              marginTop: "15%",
+              height: "70vh",
             }}
           >
-            <div
-              className="line"
-              style={{
-                width: "80px",
-                height: height + "%",
-                backgroundColor: "blue",
-                transition: "all 0.5s ease",
-                position: "absolute",
-                bottom: "18px",
-              }}
-            ></div>
-            <span
-              style={{
-                position: "absolute",
-                bottom: "-2px",
-              }}
-            >
-              Loading...
-            </span>
+            <Metronome size={60} lineWeight={5} speed={2} color="black" />
+            <p>Loading...</p>
           </div>
         ) : News.length > 0 ? (
           News.map((file, index) => (

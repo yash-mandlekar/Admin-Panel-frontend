@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Axios from "../Axios/Axios";
 import { confirmAlert } from "react-confirm-alert";
@@ -212,7 +212,7 @@ const EPaper = () => {
                   </span>
                   <div className="card-body px-2 py-1">
                     <button
-                      onClick={() => navigate("/admin/"+file._id)}
+                      onClick={() => navigate("/admin/" + file._id)}
                       className="btn btn-success mx-1"
                     >
                       Edit

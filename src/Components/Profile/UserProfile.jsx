@@ -156,7 +156,7 @@ const UserProfile = () => {
                     <ul className="list-group">
                       {UserProfile.child.map((user) => (
                         <Link
-                          to={`/profile/${user._id}`}
+                          to={`/admin/profile/${user._id}`}
                           key={user._id}
                           className="list-group-item d-flex justify-content-between align-items-center w-100"
                         >
