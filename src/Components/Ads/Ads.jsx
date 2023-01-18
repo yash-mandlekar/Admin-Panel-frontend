@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Axios from "../Axios/Axios";
 import { confirmAlert } from "react-confirm-alert";
-import Style from "../News/News.module.css";
-import moment from "moment";
 import { Metronome } from "@uiball/loaders";
 
 const Ads = () => {

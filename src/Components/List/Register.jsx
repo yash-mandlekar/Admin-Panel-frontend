@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Axios from "../Axios/Axios";
 import { motion } from "framer-motion";
 import Alert from "../Alert/Alert";

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Axios from "../Axios/Axios";
+import React from "react";
 
 const EditCategory = ({
   EditForm,
@@ -11,7 +10,6 @@ const EditCategory = ({
   categories,
 }) => {
   const {
-    _id,
     parentCategory,
     hindiName,
     englishName,

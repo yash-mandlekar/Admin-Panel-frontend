@@ -3,7 +3,6 @@ import React, {
   useState,
   useEffect,
   createContext,
-  lazy,
   Suspense,
 } from "react";
 import Login from "./Components/Login/Login";

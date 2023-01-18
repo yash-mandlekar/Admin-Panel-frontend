@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ReactPlayer from "./ReactPlayer";
 import Cropper from "react-easy-crop";
 
@@ -11,7 +11,6 @@ const DropZone = ({
   getInputProps,
   handleInput,
   title,
-  category,
   channels,
   channelInput,
   setshowDropdown,
