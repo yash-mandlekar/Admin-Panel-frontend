@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Alert from "../Alert/Alert";
 import Axios from "../Axios/Axios";
 import Style from "./News.module.css";
-import CKeditor from "./CKeditor";
+const CKeditor = React.lazy(() => import("./CKeditor"));
+const Alert = React.lazy(() => import("../Alert/Alert"));
+
 const EditNews = () => {
   const { id } = useParams();
   const navigate = useNavigate();

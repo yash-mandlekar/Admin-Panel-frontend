@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Axios from "../Axios/Axios";
-import ReactPlayer from "../FolderManage/ReactPlayer";
 import { confirmAlert } from "react-confirm-alert";
 import { Metronome } from "@uiball/loaders";
+const ReactPlayer = React.lazy(() => import("../FolderManage/ReactPlayer"));
 const News = () => {
   const playerRef = useRef();
   const navigate = useNavigate();

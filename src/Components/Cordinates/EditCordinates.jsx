@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Alert from "../Alert/Alert";
 import Axios from "../Axios/Axios";
 import Style from "../News/News.module.css";
+const Alert = React.lazy(() => import("../Alert/Alert"));
 const EditCordinates = () => {
   const navigation = useNavigate();
   const { id } = useParams();

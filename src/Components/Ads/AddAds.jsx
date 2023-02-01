@@ -1,8 +1,8 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Alert from "../Alert/Alert";
 import Axios from "../Axios/Axios";
 import Style from "../News/News.module.css";
+const Alert = React.lazy(() => import("../Alert/Alert"));
 const AddAds = () => {
   const navigation = useNavigate();
   const [NewsForm, setNewsForm] = useState({

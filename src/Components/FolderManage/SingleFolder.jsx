@@ -2,13 +2,13 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import Axios from "../Axios/Axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
-import getCroppedImg from "./CropImage";
 import { motion } from "framer-motion";
 import ReactPlayer from "./ReactPlayer";
-import DropZone from "./DropZone";
 import { confirmAlert } from "react-confirm-alert";
-import Alert from "../Alert/Alert";
 import { Metronome } from "@uiball/loaders";
+const getCroppedImg = React.lazy(() => import("./CropImage"));
+const DropZone = React.lazy(() => import("./DropZone"));
+const Alert = React.lazy(() => import("../Alert/Alert"));
 
 const SingleFolder = () => {
   const playerRef = useRef();

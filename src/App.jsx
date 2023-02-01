@@ -1,13 +1,8 @@
 import Axios from "./Components/Axios/Axios";
-import React, {
-  useState,
-  useEffect,
-  createContext,
-  Suspense,
-} from "react";
-import Login from "./Components/Login/Login";
-import Navbar from "./Components/Navbar/Navbar";
+import React, { useState, useEffect, createContext, Suspense } from "react";
 import { NewtonsCradle } from "@uiball/loaders";
+const Login = React.lazy(() => import("./Components/Login/Login"));
+const Navbar = React.lazy(() => import("./Components/Navbar/Navbar"));
 export const AuthContext = createContext();
 
 const App = () => {

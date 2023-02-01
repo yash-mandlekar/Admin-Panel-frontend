@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import React,{ useContext, useEffect, useState, useRef } from "react";
 import Axios from "../Axios/Axios";
 import { AuthContext } from "../../App";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import Alert from "../Alert/Alert";
+const Alert = React.lazy(() => import("../Alert/Alert"));
 
 const Profile = () => {
   const { userData } = useContext(AuthContext);

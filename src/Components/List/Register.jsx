@@ -1,8 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Axios from "../Axios/Axios";
 import { motion } from "framer-motion";
-import Alert from "../Alert/Alert";
 import moment from "moment";
+const Alert = React.lazy(() => import("../Alert/Alert"));
 const Profile = () => {
   const [parents, setparents] = useState([]);
   const [alert, setalert] = useState({

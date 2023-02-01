@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import Axios from "../Axios/Axios";
 import { AuthContext } from "../../App";
-import EditCategory from "./AddNewsCat";
-import Alert from "../Alert/Alert";
 import { confirmAlert } from "react-confirm-alert";
 import { motion } from "framer-motion";
 import { Metronome } from "@uiball/loaders";
+const EditCategory = React.lazy(() => import("./AddNewsCat"));
+const Alert = React.lazy(() => import("../Alert/Alert"));
 
 const Categories = () => {
   const { userData } = useContext(AuthContext);

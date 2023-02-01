@@ -1,10 +1,10 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "../Axios/Axios";
-import EditCategory from "./EditCategory";
-import Alert from "../Alert/Alert";
 import { confirmAlert } from "react-confirm-alert";
 import { motion } from "framer-motion";
 import { Metronome } from "@uiball/loaders";
+const EditCategory = React.lazy(() => import("./EditCategory"));
+const Alert = React.lazy(() => import("../Alert/Alert"));
 
 const Categories = () => {
   const [ShowForm, setShowForm] = useState(false);

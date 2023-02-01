@@ -4,7 +4,8 @@ import arrow from "../Home/arrow.png";
 import Axios from "../Axios/Axios";
 import logo from "../../Assets/Favicon.png";
 import { AuthContext } from "../../App";
-import AnimatedRoutes from "./AnimatedRoutes";
+
+const AnimatedRoutes = React.lazy(() => import("./AnimatedRoutes"));
 
 const Navbar = () => {
   const { userData, setloading } = useContext(AuthContext);
@@ -154,6 +155,11 @@ const Navbar = () => {
                   <i className="bi bi-newspaper"></i>
                   <div className="sb-nav-link-icon"></div>
                   Manage News
+                </Link>
+                <Link className="nav-link" to="/admin/usernews">
+                  <i className="bi bi-newspaper"></i>
+                  <div className="sb-nav-link-icon"></div>
+                  User News
                 </Link>
                 <Link className="nav-link" to="/admin/e-paper">
                   <i className="bi bi-pencil-square"></i>

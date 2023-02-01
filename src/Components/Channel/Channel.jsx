@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Axios from "../Axios/Axios";
 import { confirmAlert } from "react-confirm-alert";
-import Alert from "../Alert/Alert";
 import { Metronome } from "@uiball/loaders";
+const Alert = React.lazy(() => import("../Alert/Alert"));
 const Channel = () => {
   const [ChannelForm, setChannelForm] = useState({
     channelName: "",

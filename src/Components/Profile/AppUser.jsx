@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { confirmAlert } from "react-confirm-alert";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../App";
 import Axios from "../Axios/Axios";
 const AppUser = () => {

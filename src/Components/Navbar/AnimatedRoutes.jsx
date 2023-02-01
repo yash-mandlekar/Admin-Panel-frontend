@@ -1,34 +1,37 @@
 import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import Home from "../Home/Home";
-import Channel from "../Channel/Channel";
-import Profile from "../Profile/Profile";
-import UserProfile from "../Profile/UserProfile";
-import AppUser from "../Profile/AppUser";
-import FolderManage from "../FolderManage/FolderManage";
-import VideoData from "../FolderManage/SingleFolder";
-import SeniorEditor from "../List/SeniorEditor";
-import Users from "../Users/Users";
-import Editor from "../List/Editor";
-import Repoter from "../List/Repoter";
 import { AnimatePresence } from "framer-motion";
-import Register from "../List/Register";
-import Requests from "../Requests/Requests";
-import Categories from "../Categories/Categories";
-import NewsCat from "../NewsCategories/NewsCat";
-import News from "../News/News";
-import SingleNews from "../News/SingleNews";
-import AddNews from "../News/AddNews";
-import EPaper from "../E-Paper/EPaper";
-import AddEPaper from "../E-Paper/AddEPaper";
-import EditEPaper from "../E-Paper/EditEPaper";
-import Cordinates from "../Cordinates/Cordinates";
-import AddCordinates from "../Cordinates/AddCordinates";
-import EditCordinates from "../Cordinates/EditCordinates";
-import EditNews from "../News/EditNews";
-import Ads from "../Ads/Ads";
-import AddAds from "../Ads/AddAds";
-import EditAds from "../Ads/EditAds";
+
+const Home = React.lazy(() => import("../Home/Home"));
+const Channel = React.lazy(() => import("../Channel/Channel"));
+const Profile = React.lazy(() => import("../Profile/Profile"));
+const UserProfile = React.lazy(() => import("../Profile/UserProfile"));
+const AppUser = React.lazy(() => import("../Profile/AppUser"));
+const FolderManage = React.lazy(() => import("../FolderManage/FolderManage"));
+const VideoData = React.lazy(() => import("../FolderManage/SingleFolder"));
+const SeniorEditor = React.lazy(() => import("../List/SeniorEditor"));
+const Users = React.lazy(() => import("../Users/Users"));
+const Editor = React.lazy(() => import("../List/Editor"));
+const Repoter = React.lazy(() => import("../List/Repoter"));
+const Register = React.lazy(() => import("../List/Register"));
+const Requests = React.lazy(() => import("../Requests/Requests"));
+const Categories = React.lazy(() => import("../Categories/Categories"));
+const NewsCat = React.lazy(() => import("../NewsCategories/NewsCat"));
+const News = React.lazy(() => import("../News/News"));
+const SingleNews = React.lazy(() => import("../News/SingleNews"));
+const AddNews = React.lazy(() => import("../News/AddNews"));
+const EPaper = React.lazy(() => import("../E-Paper/EPaper"));
+const AddEPaper = React.lazy(() => import("../E-Paper/AddEPaper"));
+const EditEPaper = React.lazy(() => import("../E-Paper/EditEPaper"));
+const Cordinates = React.lazy(() => import("../Cordinates/Cordinates"));
+const AddCordinates = React.lazy(() => import("../Cordinates/AddCordinates"));
+const EditCordinates = React.lazy(() => import("../Cordinates/EditCordinates"));
+const EditNews = React.lazy(() => import("../News/EditNews"));
+const Ads = React.lazy(() => import("../Ads/Ads"));
+const AddAds = React.lazy(() => import("../Ads/AddAds"));
+const EditAds = React.lazy(() => import("../Ads/EditAds"));
+const UserNews = React.lazy(() => import("../UserNews/UserNews"));
+
 const AnimatedRoutes = () => {
   const location = useLocation();
 
@@ -45,6 +48,7 @@ const AnimatedRoutes = () => {
         <Route path="/admin/userprofile/:id" element={<AppUser />} />
         <Route path="/admin/requests" element={<Requests />} />
         <Route path="/admin/categories" element={<Categories />} />
+        <Route path="/admin/usernews" element={<UserNews />} />
         <Route path="/admin/news">
           <Route index element={<News />} />
           <Route path=":id" element={<SingleNews />} />

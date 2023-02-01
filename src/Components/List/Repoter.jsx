@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "../Axios/Axios";
 import { confirmAlert } from "react-confirm-alert";
-import ListComp from "./ListComp";
+const ListComp = React.lazy(() => import("./ListComp"));
 
 const Repoter = () => {
   const [List, setList] = useState([]);
