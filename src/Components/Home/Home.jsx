@@ -125,8 +125,8 @@ const Home = () => {
             <Metronome size={60} lineWeight={5} speed={2} color="black" />
             <p>Loading...</p>
           </div>
-        ) : News.length > 0 ? (
-          News.map((file, index) => (
+        ) : News?.length > 0 ? (
+          News?.map((file, index) => (
             <div key={file._id} className="">
               <div
                 className="card mt-1 mx-1"

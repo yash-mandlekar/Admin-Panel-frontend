@@ -24,7 +24,8 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "screenfull": "^6.0.2",
-    "video.js": "^7.20.3"
+    "video.js": "^7.20.3",
+    "zego-express-engine-webrtc": "^2.22.0"
   },
   "scripts": {
     "start": "react-scripts start",

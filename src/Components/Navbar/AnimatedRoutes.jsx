@@ -31,14 +31,18 @@ const Ads = React.lazy(() => import("../Ads/Ads"));
 const AddAds = React.lazy(() => import("../Ads/AddAds"));
 const EditAds = React.lazy(() => import("../Ads/EditAds"));
 const UserNews = React.lazy(() => import("../UserNews/UserNews"));
-
+const UserLive = React.lazy(() => import("../UserLive/UserLive"));
+const WatchLive = React.lazy(() => import("../UserLive/WatchLive"));
 const AnimatedRoutes = () => {
   const location = useLocation();
 
   return (
     <AnimatePresence>
+      {/* default path should be /admin */}
       <Routes location={location} key={location.pathname}>
-        <Route path="/admin" element={<Home />} />
+        <Route path="/*" element={<Home />} />
+        <Route path="/admin/userLive" element={<UserLive />} />
+        <Route path="/admin/showLive/:roomId" element={<WatchLive />} />
         <Route path="/admin/channel" element={<Channel />} />
         <Route path="/admin/folderManagement" element={<FolderManage />} />
         <Route path="/admin/folder/:id" element={<VideoData />} />

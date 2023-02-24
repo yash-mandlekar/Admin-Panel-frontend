@@ -84,7 +84,7 @@ const Navbar = () => {
                   return (
                     <Link
                       key={user._id}
-                      to={`/profile/${user._id}`}
+                      to={`/admin/profile/${user._id}`}
                       className="list-group-item list-group-item-action search-user"
                       style={{ width: "135%" }}
                       aria-current="true"
@@ -145,6 +145,18 @@ const Navbar = () => {
                   <i className="bi bi-house"></i>
                   <div className="sb-nav-link-icon"></div>
                   Dashboard
+                </Link>
+                <Link
+                  style={{
+                    display: userData.role === "admin" ? "flex" : "none",
+                    backgroundColor: "red",
+                  }}
+                  className="nav-link"
+                  to="/admin/userLive"
+                >
+                  <i className="bi bi-camera-video"></i>
+                  <div className="sb-nav-link-icon"></div>
+                  Live Requests
                 </Link>
                 <Link className="nav-link" to="/admin/channel">
                   <i className="bi bi-bricks"></i>

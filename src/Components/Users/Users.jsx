@@ -22,7 +22,6 @@ const Users = () => {
     const response = await Axios.get("/users", config);
     setLoader(false);
     setList(response.data.appUsers);
-    console.log(response.data.appUsers);
   };
   const confirmBox = (item, block) => {
     confirmAlert({
@@ -102,7 +101,11 @@ const Users = () => {
                       <div className="d-flex text-black">
                         <div className="flex-shrink-0">
                           <img
-                            src={item.profileImage}
+                            src={
+                              item.profileImage.includes("/avtar")
+                                ? item.profileImage
+                                : `data:video/mp4;base64,${item?.profileImage}`
+                            }
                             alt="image not found"
                             className="img-fluid"
                             style={{ width: "180px", borderRadius: "10px" }}

@@ -1,0 +1,226 @@
+.myvideo{
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+}
+.Liveuser{
+    width: 100%;
+    height: 100vh;
+    background-color: #222222;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+.liveuservideo{
+    position: relative;
+    width: 35vw;
+    height: 100%;
+    display: flex;
+    background-color: aliceblue;
+}
+.liveuservideo video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.liveuservideofeatures{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+.liveuservideofeaturesTop{
+    height: 20%;
+    display: flex;
+    width: 100%;
+}
+.liveuservideofeaturesTopLeft{
+    width: 13%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.liveuservideofeaturesTopLeftphoto{
+    margin-top: 80%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #160f0f;
+}
+.liveuservideofeaturesTopLeftName{
+    position: relative;
+    color: black;
+}
+.liveuservideofeaturesTopLeftName h3{
+    position: absolute;
+    font-size: 1.2rem;
+    font-weight: 500;
+    bottom: 18%;
+    left: 10%;
+}
+.liveuservideofeaturesMiddle{
+    height: 70%;
+    display: flex;
+    width: 100%;
+}
+.liveuservideofeaturesBottom{
+    height: 10%;
+    display: flex;
+    width: 100%;
+}
+.liveuservideofeaturesBottomleft{
+    display: flex;
+    align-items: center;
+    width: 90%;
+    height: 100%;
+}
+.liveuservideofeaturesBottomleft i{
+    cursor: pointer;
+    font-size: 1.4rem;
+    color: #000000;
+}
+.liveuservideofeaturesBottomleftmute1{
+    position: relative;
+    width: 20%;
+    height: 100%;
+}
+.liveuservideofeaturesBottomleftmute11{
+    position: relative;
+    width: 20%;
+    height: 100%;
+}
+.liveuservideofeaturesBottomRight{
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.liveuservideofeaturesBottomRightclose{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.liveuservideofeaturesBottomRightclose i{
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: #000;
+}
+.liveuservideofeaturesBottomleftmute{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.liveuservideofeaturesBottomleftmute2{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.liveuservideofeaturesBottomleftcammera{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.liveuservideofeaturesBottomleftcammera1{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media screen and (max-width: 768px){
+    .liveuservideo{
+        width: 100%;
+        height: 100%;
+    }
+    .liveuservideofeatures{
+        padding: 0 10px;
+    }
+    .liveuservideofeaturesTopLeftName h3{
+        font-size: 1rem;
+    }
+    .liveuservideofeaturesBottomleftmute{
+        width: 30px;
+        height: 30px;
+    }
+    .liveuservideofeaturesBottomleftmute2{
+        width: 30px;
+        height: 30px;
+    }
+    .liveuservideofeaturesBottomleftcammera{
+        width: 30px;
+        height: 30px;
+    }
+    .liveuservideofeaturesBottomleftcammera1{
+        width: 30px;
+        height: 30px;
+    }
+    .liveuservideofeaturesBottomRightclose{
+        width: 25px;
+        height: 25px;
+    }
+    .liveuservideofeaturesBottomRightclose i{
+        font-size: 1.4rem;
+    }
+    .liveuservideofeaturesBottomleftmute1{
+        width: 15%;
+    }
+    .liveuservideofeaturesBottomleftmute11{
+        width: 15%;
+    }
+    .liveuservideofeaturesBottomleft i{
+        font-size: 1.2rem;
+    }
+    .liveuservideofeaturesTopLeftName h3 {
+        bottom: 30%;
+        padding-left: 16px;
+    }
+    .Liveuser{
+        width: 100%;
+        height: 100vh;
+        background-color: #ffffff;
+        padding: 0;
+    }
+    
+}
