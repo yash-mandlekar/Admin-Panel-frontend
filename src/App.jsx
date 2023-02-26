@@ -22,7 +22,7 @@ const App = () => {
       setloading(false);
     };
   }, []);
-  useEffect(() => {
+  useEffect(() => { 
     const refreshToken = JSON.parse(localStorage.getItem("refreshTokenAdmin"));
     if (refreshToken) {
       Axios.post("/refreshtoken", {
